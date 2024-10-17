@@ -1,11 +1,12 @@
+import java.lang.Math;
 public class Employee {
     private String employeeID;
     private String fullName;
     private String email;
     private String phoneNumber;
 
-    public Employee(String employeeID, String fullName, String email, String phoneNumber){
-        this.employeeID = employeeID;
+    public Employee(String fullName, String email, String phoneNumber){
+        this.employeeID = generateID();
         this.fullName = fullName;
         this.email = email;
         this.phoneNumber = phoneNumber;
@@ -45,6 +46,13 @@ public class Employee {
 
     public void displayEmployeeInfo(){
         System.out.println(employeeID + " | " + fullName +  " | " + email + " | " + phoneNumber);
+    }
+
+    public String generateID(){
+        String id = "";
+        id += (char)((int)(Math.random() * 26) + 65);
+        id += ((int)(Math.random() * 900) + 100);
+        return id;
     }
 }
 

@@ -2,6 +2,7 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 public class GUI {
 
@@ -9,7 +10,11 @@ public class GUI {
     private JPanel mainPanel, buttonPanel;
     private CardLayout cardLayout;
 
+    private EmployeeManagementSystem employeeManagementSystem;
+
     public GUI() {
+        employeeManagementSystem = new EmployeeManagementSystem();
+
         // Initialize the main frame
         frame = new JFrame("Employee Management System");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -77,10 +82,46 @@ public class GUI {
 
     // Show the Create Employee panel
     private void showCreateEmployeePanel() {
-        cardLayout.show(mainPanel, "Create Employee");
-        // Add logic to create employee
-    }
+        //components for the "Create Employee" panel
+        JButton createButton = new JButton("Create Employee");
+        JTextField nameField = new JTextField(20);
+        JTextField emailField = new JTextField(10);
+        JTextField phoneNumberField = new JTextField(15);
 
+        //panel for creating an employee and setting the panels layout
+        JPanel createEmployeePanel = new JPanel();
+        createEmployeePanel.setLayout(new GridLayout(4, 2));
+
+        //adding components to panel
+        createEmployeePanel.add(new JLabel("Name: "));
+        createEmployeePanel.add(nameField);
+
+        createEmployeePanel.add(new JLabel("Email: "));
+        createEmployeePanel.add(emailField);
+        
+        createEmployeePanel.add(new JLabel("Phone Number: "));
+        createEmployeePanel.add(phoneNumberField);
+        createEmployeePanel.add(createButton);
+
+        //add panel to the mainPanel with name "Create Employee"
+        mainPanel.add(createEmployeePanel, "Create Employee");
+
+        //show "Create Employee" panel using cardLayout
+        cardLayout.show(mainPanel, "Create Employee");
+
+        createButton.addActionListener(e -> {
+            String name = nameField.getText();
+            String email = emailField.getText();
+            String phoneNumber = phoneNumberField.getText();
+
+            //creating a new employee in Employee class and adding it the the system
+            Employee newEmployee = new Employee(name, email, phoneNumber);
+            employeeManagementSystem.addEmployee(newEmployee);
+
+            JOptionPane.showMessageDialog(mainPanel, name + " added successfully.");
+        });
+    }
+    
     // Show the Edit Employee panel
     private void showEditEmployeePanel() {
         cardLayout.show(mainPanel, "Edit Employee");
@@ -89,8 +130,36 @@ public class GUI {
 
     // Show the View Employees panel
     private void showViewEmployeesPanel() {
+        //switch to "View Employees" panel
         cardLayout.show(mainPanel, "View Employees");
         // Add logic to view employees
+
+        //create panel for viewing employees
+        JPanel viewEmployeesPanel = new JPanel();
+        viewEmployeesPanel.setLayout(new BorderLayout());
+
+        List<Employee> employees = employeeManagementSystem.getEmployees(); //THIS HAS TO BE CHANGE TO WORK WITH TXT FILE
+
+        String[] columnNames = {"ID", "Name", "Email", "Phone Number"};
+        Object[][] data = new Object[employees.size()][4]; //adjusts size based off number of employees in system
+
+        for(int i = 0; i < employees.size(); i++){
+            Employee emp = employees.get(i);
+            data[i][0] = emp.getEmployeeID();
+            data[i][1] = emp.getFullName();
+            data[i][2] = emp.getEmail();
+            data[i][3] = emp.getPhoneNumber();
+        }
+
+        //JTable displays employee data
+        JTable employeeTable = new JTable(data, columnNames);
+        JScrollPane scrollPane = new JScrollPane(employeeTable);
+
+        viewEmployeesPanel.add(scrollPane, BorderLayout.CENTER);
+
+        mainPanel.add(viewEmployeesPanel, "View Employees");
+
+        //cardLayout.show(mainPanel, "View Employees");
     }
 
     // Show the Delete Employee panel
