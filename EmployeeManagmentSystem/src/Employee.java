@@ -12,6 +12,13 @@ public class Employee {
         this.phoneNumber = phoneNumber;
     }
 
+    public Employee(String employeeID, String fullName, String email, String phoneNumber){
+        this.employeeID = employeeID;
+        this.fullName = fullName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+    }
+
     public String getEmployeeID(){
         return employeeID;
     }

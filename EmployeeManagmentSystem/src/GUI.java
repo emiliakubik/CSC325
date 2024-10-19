@@ -30,6 +30,7 @@ public class GUI {
         // Add buttons for each key feature
         addButton("Create Employee", new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                System.out.println("Create Employee button clicked.");
                 showCreateEmployeePanel();
             }
         });
@@ -42,6 +43,7 @@ public class GUI {
 
         addButton("View Employees", new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                System.out.println("View Employees button clicked.");
                 showViewEmployeesPanel();
             }
         });
@@ -84,9 +86,9 @@ public class GUI {
     private void showCreateEmployeePanel() {
         //components for the "Create Employee" panel
         JButton createButton = new JButton("Create Employee");
-        JTextField nameField = new JTextField(20);
-        JTextField emailField = new JTextField(10);
-        JTextField phoneNumberField = new JTextField(15);
+        JTextField nameField = new JTextField();
+        JTextField emailField = new JTextField();
+        JTextField phoneNumberField = new JTextField();
 
         //panel for creating an employee and setting the panels layout
         JPanel createEmployeePanel = new JPanel();
@@ -117,7 +119,6 @@ public class GUI {
             //creating a new employee in Employee class and adding it the the system
             Employee newEmployee = new Employee(name, email, phoneNumber);
             employeeManagementSystem.addEmployee(newEmployee);
-
             JOptionPane.showMessageDialog(mainPanel, name + " added successfully.");
         });
     }
@@ -130,18 +131,13 @@ public class GUI {
 
     // Show the View Employees panel
     private void showViewEmployeesPanel() {
-        //switch to "View Employees" panel
-        cardLayout.show(mainPanel, "View Employees");
-        // Add logic to view employees
-
-        //create panel for viewing employees
         JPanel viewEmployeesPanel = new JPanel();
         viewEmployeesPanel.setLayout(new BorderLayout());
 
-        List<Employee> employees = employeeManagementSystem.getEmployees(); //THIS HAS TO BE CHANGE TO WORK WITH TXT FILE
+        List<Employee> employees = employeeManagementSystem.getEmployees();
 
-        String[] columnNames = {"ID", "Name", "Email", "Phone Number"};
-        Object[][] data = new Object[employees.size()][4]; //adjusts size based off number of employees in system
+        String columnNames[] = {"Employee ID", "Full Name", "Email", "Phone Number"};
+        Object data[][] = new Object[employees.size()][4];
 
         for(int i = 0; i < employees.size(); i++){
             Employee emp = employees.get(i);
@@ -151,15 +147,13 @@ public class GUI {
             data[i][3] = emp.getPhoneNumber();
         }
 
-        //JTable displays employee data
         JTable employeeTable = new JTable(data, columnNames);
         JScrollPane scrollPane = new JScrollPane(employeeTable);
 
         viewEmployeesPanel.add(scrollPane, BorderLayout.CENTER);
-
         mainPanel.add(viewEmployeesPanel, "View Employees");
 
-        //cardLayout.show(mainPanel, "View Employees");
+        cardLayout.show(mainPanel, "View Employees");
     }
 
     // Show the Delete Employee panel
@@ -174,3 +168,29 @@ public class GUI {
         // Add logic to manage job history
     }
 }
+
+/*JPanel viewEmployeesPanel = new JPanel();
+viewEmployeesPanel.setLayout(new BorderLayout());
+mainPanel.add(viewEmployeesPanel, "View Employees");
+
+cardLayout.show(mainPanel, "View Employees");
+List<Employee> employees = employeeManagementSystem.getEmployees();
+
+String columnNames[] = {"employee ID", "Full name", "Email", "Phone number"};
+Object data[][] = new Object[employees.size()][4];
+
+for(int i = 0; i < employees.size(); i++){
+    Employee emp = employees.get(i);
+    data[i][0] = emp.getEmployeeID();
+    data[i][1] = emp.getFullName();
+    data[i][2] = emp.getEmail();
+    data[i][3] = emp.getPhoneNumber();
+}
+
+JTable employeeTable = new JTable(data, columnNames);
+JScrollPane scrollPane = new JScrollPane(employeeTable);
+viewEmployeesPanel.add(scrollPane, BorderLayout.CENTER);
+
+mainPanel.add(viewEmployeesPanel, "View Employees");
+
+cardLayout.show(mainPanel, "View Employees");*/

@@ -52,13 +52,14 @@ public class EmployeeManagementSystem{
                     String email = details[2];
                     String phone = details[3];
 
-                    Employee employee = new Employee(name, email, phone);
+                    Employee employee = new Employee(id, name, email, phone);
                     employeeList.add(employee);
                 }
             }
         } catch(IOException e){
-            System.out.println("Unable to read from file.")
+            System.out.println("Unable to read from file.");
         }
+        return employeeList;
     }
 
     // public List<Employee> getEmployees(){
