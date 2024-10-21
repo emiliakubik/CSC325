@@ -20,6 +20,9 @@ public class GUI {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800, 600);
         
+        // Center the frame on the screen
+        frame.setLocationRelativeTo(null);
+
         cardLayout = new CardLayout();
         mainPanel = new JPanel(cardLayout);
 

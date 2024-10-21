@@ -57,8 +57,9 @@ public class EmployeeManagementSystem{
                 }
             }
         } catch(IOException e){
-            System.out.println("Unable to read from file.")
+            System.out.println("Unable to read from file.");
         }
+        return employeeList;  // Added this to get rid of the error
     }
 
     // public List<Employee> getEmployees(){
