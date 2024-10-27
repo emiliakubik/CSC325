@@ -128,19 +128,18 @@ public class GUI {
     
     // Show the Edit Employee panel
     private void showEditEmployeePanel() {
+        //GET RID OF THIS DONT NEED.
         cardLayout.show(mainPanel, "Edit Employee");
-        // Add logic to edit employee
     }
 
     // Show the View Employees panel
     private void showViewEmployeesPanel() {
-        JPanel viewEmployeesPanel = new JPanel();
-        viewEmployeesPanel.setLayout(new BorderLayout());
+        JPanel viewEmployeesPanel = new JPanel(new BorderLayout());
+        viewEmployeesPanel.setName("View Employees");
 
         List<Employee> employees = employeeManagementSystem.getEmployees();
-
-        String columnNames[] = {"Employee ID", "Full Name", "Email", "Phone Number"};
-        Object data[][] = new Object[employees.size()][4];
+        String[] columnNames = {"Employee ID", "Full Name", "Email", "Phone Number"};
+        Object[][] data = new Object[employees.size()][4];
 
         for(int i = 0; i < employees.size(); i++){
             Employee emp = employees.get(i);
@@ -151,18 +150,111 @@ public class GUI {
         }
 
         JTable employeeTable = new JTable(data, columnNames);
+        employeeTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         JScrollPane scrollPane = new JScrollPane(employeeTable);
 
-        viewEmployeesPanel.add(scrollPane, BorderLayout.CENTER);
+        JPanel editFormPanel = new JPanel(new GridLayout());
+        JTextField idField = new JTextField();
+        JTextField nameField = new JTextField();
+        JTextField emailField = new JTextField();
+        JTextField phoneField = new JTextField();
+
+        editFormPanel.add(new JLabel("Employee ID: "));
+        editFormPanel.add(idField);
+        editFormPanel.add(new JLabel("Full Name: "));
+        editFormPanel.add(nameField);
+        editFormPanel.add(new JLabel("Email: "));
+        editFormPanel.add(emailField);
+        editFormPanel.add(new JLabel("Phone Number: "));
+        editFormPanel.add(phoneField);
+
+        idField.setEditable(false);
+
+        employeeTable.getSelectionModel().addListSelectionListener(e -> {
+            if(!e.getValueIsAdjusting() && employeeTable.getSelectedRow() != -1){
+                int selectedRow = employeeTable.getSelectedRow();
+                Employee selectedEmployee = employees.get(selectedRow);
+
+                idField.setText(selectedEmployee.getEmployeeID());
+                nameField.setText(selectedEmployee.getFullName());
+                emailField.setText(selectedEmployee.getEmail());
+                phoneField.setText(selectedEmployee.getPhoneNumber());
+            }
+        });
+
+        JButton updateButton = new JButton("Update Employee");
+        updateButton.addActionListener(event -> {
+            int selectedRow = employeeTable.getSelectedRow();
+            if (selectedRow != -1){
+                Employee emp = employees.get(selectedRow);
+                emp.setFullName(nameField.getText());
+                emp.setEmail(emailField.getText());
+                emp.setPhoneNumber(phoneField.getText());
+
+                employeeManagementSystem.editEmployee(emp);
+                JOptionPane.showMessageDialog(mainPanel, "Employee updated successfully.");
+
+                showEditEmployeePanel();
+            } else {
+                JOptionPane.showMessageDialog(mainPanel, "Please select an employee to edit.");
+            }
+        });
+
+        viewEmployeesPanel.add(scrollPane, BorderLayout.NORTH);
+        viewEmployeesPanel.add(editFormPanel, BorderLayout.CENTER);
+        viewEmployeesPanel.add(updateButton, BorderLayout.SOUTH);
+
+
+        //viewEmployeesPanel.add(scrollPane, BorderLayout.CENTER);
         mainPanel.add(viewEmployeesPanel, "View Employees");
+
+        viewEmployeesPanel.revalidate();
+        viewEmployeesPanel.repaint();
 
         cardLayout.show(mainPanel, "View Employees");
     }
 
     // Show the Delete Employee panel
     private void showDeleteEmployeePanel() {
-        cardLayout.show(mainPanel, "Delete Employee");
-        // Add logic to delete employee 
+        //implementing attributes of "Remove Employee" button
+        JButton removeButton = new JButton("Remove Employee");
+        JTextField employeeIdField = new JTextField();
+
+        //setting up panel for removing a person and the way it's layout
+        JPanel removeEmployeePanel = new JPanel();
+        removeEmployeePanel.setLayout(new GridLayout(2, 2, 10, 10));
+
+        //adding components to panel
+        removeEmployeePanel.add(new JLabel("Employee ID: "));
+        removeEmployeePanel.add(employeeIdField);
+        removeEmployeePanel.add(new JLabel());
+        removeEmployeePanel.add(removeButton);
+
+        //adding this panel to the main panel
+        mainPanel.add(removeEmployeePanel, "Remove Employee");
+
+        //showing this panel 
+        cardLayout.show(mainPanel, "Remove Employee");
+
+        //action listener to the Remove button
+        removeButton.addActionListener(e -> {
+            String employeeID = employeeIdField.getText().trim();
+            if(employeeID.isEmpty()){
+                JOptionPane.showMessageDialog(mainPanel, "Please enter an Employee ID");
+                return;
+            }
+
+            //finding and removing the employee
+            boolean success = employeeManagementSystem.removeEmployee(employeeID);
+
+            if(success){
+                JOptionPane.showMessageDialog(mainPanel, "Employee " + employeeID + " removed successfully.");
+            } else {
+                JOptionPane.showMessageDialog(mainPanel, "Employee " + employeeID + " not found.");
+            }
+
+            employeeIdField.setText("");
+        });
     }
 
     // Show the Manage Job History panel
@@ -171,29 +263,3 @@ public class GUI {
         // Add logic to manage job history
     }
 }
-
-/*JPanel viewEmployeesPanel = new JPanel();
-viewEmployeesPanel.setLayout(new BorderLayout());
-mainPanel.add(viewEmployeesPanel, "View Employees");
-
-cardLayout.show(mainPanel, "View Employees");
-List<Employee> employees = employeeManagementSystem.getEmployees();
-
-String columnNames[] = {"employee ID", "Full name", "Email", "Phone number"};
-Object data[][] = new Object[employees.size()][4];
-
-for(int i = 0; i < employees.size(); i++){
-    Employee emp = employees.get(i);
-    data[i][0] = emp.getEmployeeID();
-    data[i][1] = emp.getFullName();
-    data[i][2] = emp.getEmail();
-    data[i][3] = emp.getPhoneNumber();
-}
-
-JTable employeeTable = new JTable(data, columnNames);
-JScrollPane scrollPane = new JScrollPane(employeeTable);
-viewEmployeesPanel.add(scrollPane, BorderLayout.CENTER);
-
-mainPanel.add(viewEmployeesPanel, "View Employees");
-
-cardLayout.show(mainPanel, "View Employees");*/
