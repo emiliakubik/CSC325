@@ -9,7 +9,7 @@ public class EmployeeManagementSystem{
 
     public void addEmployee(Employee employee){
         try(BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, true))){ //"true" allows appending to an already written file, rather than that previous data getting removed
-            writer.write(employee.getEmployeeID() + ", " + employee.getFullName() + ", " + employee.getEmail() + ", " + employee.getPhoneNumber());
+            writer.write(employee.getEmployeeID() + ", " + employee.getFullName() + ", " + employee.getEmail() + ", " + employee.getPhoneNumber() + ", " + employee.getPosition() + ", " + employee.getStreet() + ", " + employee.getCity() + ", " + employee.getState() + ", " + employee.getZipCode() + ", " + employee.getBirthDay() + ", " + employee.getBirthMonth() + ", " + employee.getBirthYear() + ", " + employee.getGender());
             writer.newLine();
         } catch (IOException e){
             System.out.println("Unable to write to file.");
@@ -23,7 +23,8 @@ public class EmployeeManagementSystem{
         try(BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, true))){
             for (Employee emp : employees){
                 if (emp.getEmployeeID().equals(updatedEmp.getEmployeeID())){
-                    writer.write(updatedEmp.getEmployeeID() + ", " + updatedEmp.getFullName() + ", " + updatedEmp.getEmail() + ", " + updatedEmp.getPhoneNumber());
+                    writer.write(updatedEmp.getEmployeeID() + ", " + updatedEmp.getFullName() + ", " + updatedEmp.getEmail() + ", " + updatedEmp.getPhoneNumber() + ", " + updatedEmp.getPosition() + ", " + updatedEmp.getStreet() + ", " + updatedEmp.getCity() + ", " + updatedEmp.getState() + ", " + updatedEmp.getZipCode() + ", " + updatedEmp.getBirthDay() + ", " + updatedEmp.getBirthMonth() + ", " + updatedEmp.getBirthYear() + ", " + updatedEmp.getGender());
+                    writer.newLine();
                 } else {
                     writer.newLine();
                 }
@@ -66,6 +67,15 @@ public class EmployeeManagementSystem{
         return success;
     }
 
+    public Employee getEmployeeById(String employeeId){
+        for (Employee employee : getEmployees()) {
+            if (employee.getEmployeeID().equals(employeeId)){
+                return employee;
+            }
+        }
+        return null;
+    }
+
     public List<Employee> getEmployees(){
         List<Employee> employeeList = new ArrayList<>();
 
@@ -73,19 +83,29 @@ public class EmployeeManagementSystem{
             String line;
             while((line = reader.readLine()) != null){
                 String[] details = line.split(",");
-                if (details.length == 4){
+                if (details.length == 13){
                     String id = details[0];
                     String name = details[1];
                     String email = details[2];
                     String phone = details[3];
+                    String position = details[4];
+                    String street = details[5];
+                    String city = details[6];
+                    String state = details[7];
+                    String zipCode = details[8];
+                    String birthDay = details[9];
+                    String birthMonth = details[10];
+                    String birthYear = details[11];
+                    String gender = details[12];
 
-                    Employee employee = new Employee(id, name, email, phone);
+                    Employee employee = new Employee(id, name, email, phone, position, street, city, state, zipCode, birthDay, birthMonth, birthYear, gender);
                     employeeList.add(employee);
                 }
             }
         } catch(IOException e){
             System.out.println("Unable to read from file.");
         }
+        System.out.println("Size: " + employeeList.size());
         return employeeList;
     }
 }
