@@ -3,37 +3,43 @@ import java.util.List;
 import java.io.*;
 
 public class EmployeeManagementSystem{
+    //this is the txt file that all employee info will be kept on
     private static final String FILE_PATH = "empManagementSystem.txt";
 
-    public EmployeeManagementSystem(){}
+    //public EmployeeManagementSystem(){}- MAY NOT NEED?
 
+    //this method gets passed an employee from Employee class, takes this info and writes it into the txt file
     public void addEmployee(Employee employee){
         try(BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, true))){ //"true" allows appending to an already written file, rather than that previous data getting removed
-            writer.write(employee.getEmployeeID() + ", " + employee.getFullName() + ", " + employee.getEmail() + ", " + employee.getPhoneNumber() + ", " + employee.getPosition() + ", " + employee.getStreet() + ", " + employee.getCity() + ", " + employee.getState() + ", " + employee.getZipCode() + ", " + employee.getBirthDay() + ", " + employee.getBirthMonth() + ", " + employee.getBirthYear() + ", " + employee.getGender());
+            writer.write(employee.getEmployeeID() + ", " + employee.getFullName() + ", " + employee.getEmail() + ", " + employee.getPhoneNumber() + ", " + employee.getPosition() + ", " + employee.getStreet() + ", " + employee.getCity() + ", " + employee.getState() + ", " + employee.getZipCode() + ", " + employee.getBirthDay() + ", " + employee.getBirthMonth() + ", " + employee.getBirthYear() + ", " + employee.getGender() + ", " + employee.getEmploymentDay() + ", " + employee.getEmploymentMonth() + ", " + employee.getEmploymentYear());
             writer.newLine();
-        } catch (IOException e){
+        } catch (IOException e){ //exception handling incase for some reason this info cannot be appended to the file
             System.out.println("Unable to write to file.");
         }
     }
 
+    //this method gets passed a "new" employee that actually the same employee that already exists but with new updated info, method removes the old employee and all their info and adds this new one
     public void editEmployee(Employee updatedEmp){
         List<Employee> employees = getEmployees();
         String removeID = updatedEmp.getEmployeeID();
+        //calls removeEmployee method on this employee with its old info, so that this employee isn't just listed twice now
         removeEmployee(removeID);
+        //writes in that employee with its new info into the txt file
         try(BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, true))){
             for (Employee emp : employees){
                 if (emp.getEmployeeID().equals(updatedEmp.getEmployeeID())){
-                    writer.write(updatedEmp.getEmployeeID() + ", " + updatedEmp.getFullName() + ", " + updatedEmp.getEmail() + ", " + updatedEmp.getPhoneNumber() + ", " + updatedEmp.getPosition() + ", " + updatedEmp.getStreet() + ", " + updatedEmp.getCity() + ", " + updatedEmp.getState() + ", " + updatedEmp.getZipCode() + ", " + updatedEmp.getBirthDay() + ", " + updatedEmp.getBirthMonth() + ", " + updatedEmp.getBirthYear() + ", " + updatedEmp.getGender());
+                    writer.write(updatedEmp.getEmployeeID() + ", " + updatedEmp.getFullName() + ", " + updatedEmp.getEmail() + ", " + updatedEmp.getPhoneNumber() + ", " + updatedEmp.getPosition() + ", " + updatedEmp.getStreet() + ", " + updatedEmp.getCity() + ", " + updatedEmp.getState() + ", " + updatedEmp.getZipCode() + ", " + updatedEmp.getBirthDay() + ", " + updatedEmp.getBirthMonth() + ", " + updatedEmp.getBirthYear() + ", " + updatedEmp.getGender() + ", " + updatedEmp.getEmploymentDay() + ", " + updatedEmp.getEmploymentMonth() + ", " + updatedEmp.getEmploymentYear());
                     writer.newLine();
                 } else {
                     writer.newLine();
                 }
             }
-        }catch (IOException e){
+        }catch (IOException e){ //exception handling incase for some reason this info cannot be appended to the file
             System.out.println("Unable to write to file.");
         }
     }
 
+    //this method is passed an employeesID and it finds that employee by its ID and completely removes it from the txt file
     public boolean removeEmployee(String employeeID){
         //create a new temporary list to hold all the employees minus the one being removed
         List<String> employeeList = new ArrayList<>();
@@ -49,7 +55,7 @@ public class EmployeeManagementSystem{
                     success = true;
                 }
             }
-        }catch(IOException e){
+        }catch(IOException e){ //exception handling incase for some reason info cannot be read from the file
             System.out.println("Unable to read from file.");
         }
 
@@ -59,7 +65,7 @@ public class EmployeeManagementSystem{
                 writer.write(employee);
                 writer.newLine();
             }
-        }catch(IOException e){
+        }catch(IOException e){ //exception handling incase for some reason this info cannot be appended to the file
             System.out.println("Unable to write to file.");
         }
 
@@ -67,15 +73,18 @@ public class EmployeeManagementSystem{
         return success;
     }
 
+    //this method is passed an employee's ID and searches through the list of all employees in the system until it finds the one with that ID
     public Employee getEmployeeById(String employeeId){
         for (Employee employee : getEmployees()) {
             if (employee.getEmployeeID().equals(employeeId)){
                 return employee;
             }
         }
+        //if searches whole list and cannot find the employee, returns null
         return null;
     }
 
+    //this method returns a list of every employee that is saved in the system, along with each employees information
     public List<Employee> getEmployees(){
         List<Employee> employeeList = new ArrayList<>();
 
@@ -83,7 +92,7 @@ public class EmployeeManagementSystem{
             String line;
             while((line = reader.readLine()) != null){
                 String[] details = line.split(",");
-                if (details.length == 13){
+                if (details.length == 16){
                     String id = details[0];
                     String name = details[1];
                     String email = details[2];
@@ -93,19 +102,22 @@ public class EmployeeManagementSystem{
                     String city = details[6];
                     String state = details[7];
                     String zipCode = details[8];
-                    String birthDay = details[9];
-                    String birthMonth = details[10];
-                    String birthYear = details[11];
+                    String birthDay = details[9].trim();
+                    String birthMonth = details[10].trim();
+                    String birthYear = details[11].trim();
                     String gender = details[12];
+                    String employmentDay = details[13].trim();
+                    String employmentMonth = details[14].trim();
+                    String employmentYear = details[15].trim();
 
-                    Employee employee = new Employee(id, name, email, phone, position, street, city, state, zipCode, birthDay, birthMonth, birthYear, gender);
+                    //to do this, it just calls the Employee constructor and creates a completely new employee
+                    Employee employee = new Employee(id, name, email, phone, position, street, city, state, zipCode, birthDay, birthMonth, birthYear, gender, employmentDay, employmentMonth, employmentYear);
                     employeeList.add(employee);
                 }
             }
-        } catch(IOException e){
+        } catch(IOException e){ //exception handling incase for some reason info cannot be read from the file
             System.out.println("Unable to read from file.");
         }
-        System.out.println("Size: " + employeeList.size());
         return employeeList;
     }
 }

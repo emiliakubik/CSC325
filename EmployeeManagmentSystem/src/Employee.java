@@ -1,5 +1,8 @@
 import java.lang.Math;
+import java.time.LocalDate;
+import java.time.Period;
 public class Employee {
+    //all the employee properties 
     private String employeeID;
     private String fullName;
     private String email;
@@ -13,8 +16,12 @@ public class Employee {
     private String birthMonth;
     private String birthYear;
     private String gender;
+    private String employmentDay;
+    private String employmentMonth;
+    private String employmentYear;
 
-    public Employee(String fullName, String email, String phoneNumber, String position, String street, String city, String state, String zipCode, String birthDay, String birthMonth, String birthYear, String gender){
+    //constructor that initializes all the employee info, but this is for new employees being added because it generates them a new ID
+    public Employee(String fullName, String email, String phoneNumber, String position, String street, String city, String state, String zipCode, String birthDay, String birthMonth, String birthYear, String gender, String employmentDay, String employmentMonth, String employmentYear){
         this.employeeID = generateID();
         this.fullName = fullName;
         this.email = email;
@@ -28,11 +35,13 @@ public class Employee {
         this.birthMonth = birthMonth;
         this.birthYear = birthYear;
         this.gender = gender;
+        this.employmentDay = employmentDay;
+        this.employmentMonth = employmentMonth;
+        this.employmentYear = employmentYear;
     }
 
-    //fix rest of this class to work with all new data
-
-    public Employee(String employeeID, String fullName, String email, String phoneNumber, String position, String street, String city, String state, String zipCode, String birthDay, String birthMonth, String birthYear, String gender){
+    //constructor for an employee that already exists because they already have an ID
+    public Employee(String employeeID, String fullName, String email, String phoneNumber, String position, String street, String city, String state, String zipCode, String birthDay, String birthMonth, String birthYear, String gender, String employmentDay, String employmentMonth, String employmentYear){
         this.employeeID = employeeID;
         this.fullName = fullName;
         this.email = email;
@@ -46,8 +55,12 @@ public class Employee {
         this.birthMonth = birthMonth;
         this.birthYear = birthYear;
         this.gender = gender;
+        this.employmentDay = employmentDay;
+        this.employmentMonth = employmentMonth;
+        this.employmentYear = employmentYear;
     }
 
+    //getter and setter methods for each property
     public String getEmployeeID(){
         return employeeID;
     }
@@ -152,6 +165,46 @@ public class Employee {
         this.gender = gender;
     }
 
+    public String getEmploymentDay(){
+        return employmentDay;
+    }
+
+    public void setEmploymentDay(String employmentDay){
+        this.employmentDay = employmentDay;
+    }
+
+    public String getEmploymentMonth(){
+        return employmentMonth;
+    }
+
+    public void setEmploymentMonth(String employmentMonth){
+        this.employmentMonth = employmentMonth;
+    }
+
+    public String getEmploymentYear(){
+        return employmentYear;
+    }
+
+    public void setEmploymentYear(String employmentYear){
+        this.employmentYear = employmentYear;
+    }
+
+    //this method takes the employment day, month, and year and uses Period class to calculate the length (in years) from then to today to calculate how long the employee has been employed at this company
+    public String calculateEmployementLength(){
+        int hireDay = Integer.parseInt(employmentDay);
+        int hireMonth = Integer.parseInt(employmentMonth);
+        int hireYear = Integer.parseInt(employmentYear);
+
+        LocalDate hireDate = LocalDate.of(hireYear, hireMonth, hireDay);
+        LocalDate currentDate = LocalDate.now();
+
+        Period period = Period.between(hireDate, currentDate);
+
+        double years = period.getYears() + (period.getMonths() / 12.0) + (period.getDays() / 365.0);
+        return String.format("%.2f", years) + " years";
+    }   
+
+    //this method generates an employee ID- first character is a letter (A-Z) and the last 3 characters are each numbers (0-9)
     public String generateID(){
         String id = "";
         id += (char)((int)(Math.random() * 26) + 65);
