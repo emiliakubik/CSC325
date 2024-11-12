@@ -12,35 +12,26 @@ public class StartupScreen {
         frame = new JFrame("Startup");
         frame.setUndecorated(true); // Remove title bar
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(300, 400);
+        frame.setSize(350, 450);
+
+        // Set the layout manager
         frame.setLayout(new BorderLayout());
 
-        // Create the content panel
+        // Create the content panel with white background
         JPanel contentPanel = new JPanel();
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
+        contentPanel.setBackground(Color.WHITE); // Set background to white
 
-        // Set the background color
-        contentPanel.setBackground(Color.lightGray);
+        // Load the logo without resizing it
+        ImageIcon logoIcon = new ImageIcon("EmployeeManagmentSystem\\src\\images\\HR_APP_logo.png");
 
-        // Create a label for the startup message
-        JLabel welcomeLabel = new JLabel("Welcome to Employee Tracker", SwingConstants.CENTER);
-        welcomeLabel.setFont(new Font("Arial", Font.BOLD, 16));
-        welcomeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        // Load the logo
-        ImageIcon logoIcon = new ImageIcon("CSC325\\EmployeeManagmentSystem\\src\\images\\logov1.png");
-        Image logoImage = logoIcon.getImage();
-        Image resizedLogoImage = logoImage.getScaledInstance(240, 240, Image.SCALE_SMOOTH);
-        logoIcon = new ImageIcon(resizedLogoImage);
         JLabel logoLabel = new JLabel(logoIcon);
         logoLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // Center the image
 
-        // Add the components to the content panel
-        contentPanel.add(Box.createVerticalGlue());  // Add glue to push content to the center
-        contentPanel.add(logoLabel);
-        contentPanel.add(Box.createRigidArea(new Dimension(0, 20))); // Add some spacing between text and logo
-        contentPanel.add(welcomeLabel);
-        contentPanel.add(Box.createVerticalGlue());  // Add glue to push content to the center
+        // Add the logo label to the content panel
+        contentPanel.add(Box.createVerticalGlue()); // Add glue to center the logo
+        contentPanel.add(logoLabel); // Add the logo image
+        contentPanel.add(Box.createVerticalGlue()); // Add glue to center the logo
 
         // Add the content panel to the frame
         frame.add(contentPanel, BorderLayout.CENTER);
