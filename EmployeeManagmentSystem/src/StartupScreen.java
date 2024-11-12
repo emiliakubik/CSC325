@@ -22,7 +22,7 @@ public class StartupScreen {
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
         contentPanel.setBackground(Color.WHITE); // Set background to white
 
-        // Load the logo without resizing it
+        // Load the logo
         ImageIcon logoIcon = new ImageIcon("EmployeeManagmentSystem\\src\\images\\HR_APP_logo.png");
 
         JLabel logoLabel = new JLabel(logoIcon);
