@@ -23,7 +23,7 @@ public class StartupScreen {
         contentPanel.setBackground(Color.WHITE); // Set background to white
 
         // Load the logo without resizing it
-        ImageIcon logoIcon = new ImageIcon("EmployeeManagmentSystem\\src\\images\\HR_APP_logo.png");
+        ImageIcon logoIcon = new ImageIcon("CSC325\\EmployeeManagmentSystem\\src\\images\\HR_APP_logo.png");
 
         JLabel logoLabel = new JLabel(logoIcon);
         logoLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // Center the image
