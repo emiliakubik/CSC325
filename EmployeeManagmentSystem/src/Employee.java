@@ -1,6 +1,8 @@
 import java.lang.Math;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.List;
+import java.util.ArrayList;
 public class Employee {
     //all the employee properties 
     private String employeeID;
@@ -19,6 +21,7 @@ public class Employee {
     private String employmentDay;
     private String employmentMonth;
     private String employmentYear;
+    private List<SprintEvaluation> sprintEvals = new ArrayList<>();
 
     //constructor that initializes all the employee info, but this is for new employees being added because it generates them a new ID
     public Employee(String fullName, String email, String phoneNumber, String position, String street, String city, String state, String zipCode, String birthDay, String birthMonth, String birthYear, String gender, String employmentDay, String employmentMonth, String employmentYear){
@@ -187,6 +190,14 @@ public class Employee {
 
     public void setEmploymentYear(String employmentYear){
         this.employmentYear = employmentYear;
+    }
+
+    public void addSprintEval(SprintEvaluation eval){
+        sprintEvals.add(eval);
+    }
+
+    public List<SprintEvaluation> getSprintEval(){
+        return sprintEvals;
     }
 
     //this method takes the employment day, month, and year and uses Period class to calculate the length (in years) from then to today to calculate how long the employee has been employed at this company

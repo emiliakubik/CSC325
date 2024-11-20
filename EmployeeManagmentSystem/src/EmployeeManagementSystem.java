@@ -10,10 +10,71 @@ public class EmployeeManagementSystem{
 
     //this method gets passed an employee from Employee class, takes this info and writes it into the txt file
     public void addEmployee(Employee employee){
-        try(BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, true))){ //"true" allows appending to an already written file, rather than that previous data getting removed
-            writer.write(employee.getEmployeeID() + ", " + employee.getFullName() + ", " + employee.getEmail() + ", " + employee.getPhoneNumber() + ", " + employee.getPosition() + ", " + employee.getStreet() + ", " + employee.getCity() + ", " + employee.getState() + ", " + employee.getZipCode() + ", " + employee.getBirthDay() + ", " + employee.getBirthMonth() + ", " + employee.getBirthYear() + ", " + employee.getGender() + ", " + employee.getEmploymentDay() + ", " + employee.getEmploymentMonth() + ", " + employee.getEmploymentYear());
-            writer.newLine();
+        try{
+            List<String> fileContent = new ArrayList<>();
+            boolean sprintEvalSectionFound = false;
+            int sprintEvalIndex = -1;
+
+            try(BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))){
+                String line;
+                int currentIndex = 0;
+                while((line = reader.readLine()) != null){
+                    fileContent.add(line);
+                    if(line.trim().equals("# Sprint Evaluations")){
+                        sprintEvalSectionFound = true;
+                        sprintEvalIndex = currentIndex;
+                    }
+                    currentIndex++;
+                }
+            }
+
+            String employeeData = employee.getEmployeeID() + ", " + employee.getFullName() + ", " + employee.getEmail() + ", " + employee.getPhoneNumber() + ", " + employee.getPosition() + ", " + employee.getStreet() + ", " + employee.getCity() + ", " + employee.getState() + ", " + employee.getZipCode() + ", " + employee.getBirthDay() + ", " + employee.getBirthMonth() + ", " + employee.getBirthYear() + ", " + employee.getGender() + ", " + employee.getEmploymentDay() + ", " + employee.getEmploymentMonth() + ", " + employee.getEmploymentYear();
+            if(sprintEvalSectionFound && sprintEvalIndex != -1){
+                fileContent.add(sprintEvalIndex, employeeData);
+            } else {
+                fileContent.add(employeeData);
+            }
+
+            try(BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, false))){ //"true" allows appending to an already written file, rather than that previous data getting removed
+                for(String line : fileContent){
+                    writer.write(line);
+                    writer.newLine();
+                }
+            } 
         } catch (IOException e){ //exception handling incase for some reason this info cannot be appended to the file
+            System.out.println("Unable to write to file.");
+        }
+    }
+
+    public void addSprintEval(SprintEvaluation eval){
+        try{
+            boolean headerExists = false;
+            List<String> fileContent = new ArrayList<>();
+            
+            try(BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))){
+                String line;
+                while((line = reader.readLine()) != null){
+                    fileContent.add(line);
+                    if(line.trim().equals("# Sprint Evaluations")){
+                        headerExists = true;
+                    }
+                }
+            }
+
+            try(BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH))){
+                for(String line : fileContent){
+                    writer.write(line);
+                    writer.newLine();
+                }
+
+                if(!headerExists){
+                    writer.write("# Sprint Evaluations");
+                    writer.newLine();
+                }
+
+                writer.write(eval.getName() + ", " + eval.getTitle() + ", " + eval.getEvalDay() + ", " + eval.getEvalMonth() + ", " + eval.getEvalYear() + ", " + eval.getEvalQuestion1() + ", " + eval.getEvalQuestion2() + ", " + eval.getEvalQuestion3());
+            } 
+        } catch (IOException e){
             System.out.println("Unable to write to file.");
         }
     }
@@ -84,6 +145,16 @@ public class EmployeeManagementSystem{
         return null;
     }
 
+    public Employee getEmployeeByName(String fullName){
+        for (Employee employee : getEmployees()) {
+            if (employee.getFullName().equals(fullName)){
+                return employee;
+            }
+        }
+        //if searches whole list and cannot find the employee, returns null
+        return null;
+    }
+
     //this method returns a list of every employee that is saved in the system, along with each employees information
     public List<Employee> getEmployees(){
         List<Employee> employeeList = new ArrayList<>();
@@ -119,5 +190,31 @@ public class EmployeeManagementSystem{
             System.out.println("Unable to read from file.");
         }
         return employeeList;
+    }
+
+    public List<String> getSprintEvals(Employee employee){
+        List<String> employeeEvals = new ArrayList<>();
+        try(BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))){
+            String line;
+            boolean sprintEvalSectionFound = false;
+            
+            while((line = reader.readLine()) != null){
+                line = line.trim();
+
+                if(line.equals("# Sprint Evaluations")){
+                    sprintEvalSectionFound = true;
+                    //continue; may need this? idk
+                }
+
+                if (sprintEvalSectionFound){
+                    if(line.startsWith(employee.getFullName().trim())){
+                        employeeEvals.add(line);
+                    }
+                }
+            }
+        } catch(IOException e){
+            System.out.println("Unable to read from file.");
+        }
+        return employeeEvals;
     }
 }
