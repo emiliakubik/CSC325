@@ -61,6 +61,12 @@ public class GUI {
             }
         });
 
+        addButton("Sprint Evaluations", new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                showSprintEvalPanel();
+            }
+        });
+
         // Add the panels to the main panel (CardLayout for switching views)
         mainPanel.add(new JPanel(), "Create Employee"); // Placeholder panel
         mainPanel.add(new JPanel(), "View Employees");  // Placeholder panel
@@ -477,6 +483,44 @@ public class GUI {
             //resets the text field to empty for next time use
             employeeIdField.setText("");
         });
+    }
+
+    private void showSprintEvalPanel(){
+        JPanel chooseEmployeePanel = new JPanel(new BorderLayout());
+        JLabel instructionLabel = new JLabel("Select an employee to create/view Sprint Evaluation.");
+        JComboBox<String> employeeComboBox = new JComboBox<>();
+        JComboBox<String> actionComboBox = new JComboBox<>();
+
+        for(Employee employee : employeeManagementSystem.getEmployees()){
+            employeeComboBox.addItem((String) employee.getFullName());
+        }
+
+        actionComboBox.addItem("Create New Sprint Evaluation");
+        actionComboBox.addItem("View Past Sprint Evaluations");
+
+        JPanel centerPanel = new JPanel();
+        centerPanel.add(employeeComboBox);
+        centerPanel.add(actionComboBox);
+
+        chooseEmployeePanel.add(instructionLabel, BorderLayout.NORTH);
+        chooseEmployeePanel.add(centerPanel, BorderLayout.CENTER);
+
+        actionComboBox.addActionListener(e -> {
+            Employee selectedEmployee = employeeManagementSystem.getEmployeeByName((String)employeeComboBox.getSelectedItem());
+            String selectedAction = (String) actionComboBox.getSelectedItem();
+            SprintEvaluationPanel sprintEvaluationPanel = new SprintEvaluationPanel(selectedEmployee);
+
+            if(selectedAction.equals("Create New Sprint Evaluation")){
+                mainPanel.add(sprintEvaluationPanel.getCreatePanel(), selectedEmployee.getFullName() + "'s Sprint Evaluation");
+                cardLayout.show(mainPanel, selectedEmployee.getFullName() + "'s Sprint Evaluation");
+            } else if(selectedAction.equals("View Past Sprint Evaluations")){
+                mainPanel.add(sprintEvaluationPanel.viewSprintEvalPanel(selectedEmployee), selectedEmployee.getFullName() + "'s Sprint Evaluations");
+                cardLayout.show(mainPanel, selectedEmployee.getFullName() + "'s Sprint Evaluations");
+            }
+        });
+
+        mainPanel.add(chooseEmployeePanel, "Choose Employee");
+        cardLayout.show(mainPanel, "Choose Employee");
     }
 
     //takes the list of employees in the new sorted order and updates the data to be displayed correctly
