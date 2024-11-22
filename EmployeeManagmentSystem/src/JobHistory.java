@@ -1,204 +1,73 @@
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.HashMap;
-import javax.swing.*;
-
 public class JobHistory {
-    private JFrame frame;
-    // Fields for Current Job
-    private JCheckBox hasPreviousJobCheckbox;
-    private JTextField currentJobTitleField;
-    private JTextField currentCompanyNameField;
-    private JTextField startDateField;
-    private JTextField endDateField;
-    private JTextArea jobDescriptionArea;
-    private JComboBox<String> currentPositionDropdown;
-    private JComboBox<String> currentJobDepartment;
+    private String jobTitle;
+    private String companyName;
+    private String startDate;
+    private String endDate;
+    private String jobDescription;
+    private String department;
+    private String position;
+    
+    //fields needed only if employee has a past job
+    private String pastJobTitle;
+    private String pastJobDuration; //to be entered in months
+    private String reasonForLeaving;
 
-    private JButton saveButton;
+    //job details constructor
+    public JobHistory(String jobTitle, String companyName, String startDate, String endDate, String jobDescription, String department, String position){
+        this.jobTitle = jobTitle;
+        this.companyName = companyName;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.jobDescription = jobDescription;
+        this.department = department;
+        this.position = position;
+    }
+    //constructor with job details for employees with past jobs
+    public JobHistory(String jobTitle, String companyName, String startDate, String endDate, String jobDescription, String department, String position, String pastJobTitle, String pastJobDuration, String reasonForLeaving){
+    //since most of the job information has already been referred, I'll just refer the instances of the past job variables
+    this.pastJobDuration = pastJobDuration;
+    this.pastJobTitle = pastJobTitle;
+    this.reasonForLeaving = reasonForLeaving;
+    }
+    //creating my getters and setters for each input field
+    public String getJobTitle() {return jobTitle;}
+    public void setJobTitle(String jobTitle){this.jobTitle = jobTitle;}
+    public String getCompanyName() {return companyName;}
+    public void setCompanyName(String companyName){this.companyName = companyName;}
+    public String getStartDate() {return startDate;}
+    public void setStartDate(String startDate){this.startDate = startDate;}
+    public String getEndDate() {return endDate;}
+    public void setEndDate(String endDate){this.endDate = endDate;}
+    public String getJobDescription() {return jobDescription;}
+    public void setJobDescription(String jobDescription){this.jobDescription = jobDescription;}
+    public String getDepartment() {return department;}
+    public void setDepartment(String department){this.department = department;}
+    public String getPosition() {return position;}
+    public void setPosition(String position){this.position = position;}
+    public String getPastJobTitle() {return pastJobTitle;}
+    public void setPastJobTitle(String pastJobTitle){this.pastJobTitle = pastJobTitle;}
+    public String getPastJobDuration() {return pastJobDuration;}
+    public void setPastJobDuration(String pastJobDuration){this.pastJobDuration = pastJobDuration;}
+    public String getReasonForLeaving() {return reasonForLeaving;}
+    public void setReasonForLeaving(String reasonForLeaving){this.reasonForLeaving = reasonForLeaving;}
 
-    // Fields for past job
-    private JTextField previousJobField;
-    private JTextField previousJobDurationField;
-    private JTextField reasonForLeavingJobField;
-    private JPanel pastJobPanel;
-    private HashMap<String, String[]> departmentPositionsMap;
-
-    public TestGUI() {
-
-        frame = new JFrame("Employee Job History Tracker");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(500, 600);
-        frame.setLayout(new BorderLayout());
-
-        JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new GridLayout(11, 2, 10, 10)); 
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); 
-
-        hasPreviousJobCheckbox = new JCheckBox("Has Previous Job?");
-        mainPanel.add(hasPreviousJobCheckbox);
-        mainPanel.add(new JLabel());
-//what makes the panel visible
-        pastJobPanel = new JPanel(new GridLayout(3, 2, 5, 5));
-        pastJobPanel.setVisible(false);
-
-        mainPanel.add(new JLabel("Current Job Title:"));
-        currentJobTitleField = new JTextField();
-        mainPanel.add(currentJobTitleField);
-
-        //company name
-        mainPanel.add(new JLabel("Company Name:"));
-        currentCompanyNameField = new JTextField();
-        mainPanel.add(currentCompanyNameField);
-
-        //job start
-        mainPanel.add(new JLabel("Start Date (YYYY-MM-DD):"));
-        startDateField = new JTextField();
-        mainPanel.add(startDateField);
-
-        mainPanel.add(new JLabel("End Date (YYYY-MM-DD):"));
-        endDateField = new JTextField();
-        mainPanel.add(endDateField);
-
-        //job desc
-        mainPanel.add(new JLabel("Job Description:"));
-        jobDescriptionArea = new JTextArea(5, 20);
-        jobDescriptionArea.setLineWrap(true);
-        jobDescriptionArea.setWrapStyleWord(true);
-        JScrollPane scrollPane = new JScrollPane(jobDescriptionArea);
-        mainPanel.add(scrollPane);
-
-        //department. from this, the diff positions are determined
-        mainPanel.add(new JLabel("Select Department:"));
-        currentJobDepartment = new JComboBox<>(new String[]{"Select Department", "Engineering", "Sales", "Finance"});
-        mainPanel.add(currentJobDepartment);
-
-        mainPanel.add(new JLabel("Select Position:"));
-        currentPositionDropdown = new JComboBox<>(new String[]{"Select Position"});
-        mainPanel.add(currentPositionDropdown);
-
-        departmentPositionsMap = new HashMap<>();
-        departmentPositionsMap.put("Engineering", new String[]{"Junior Developer", "Senior Developer", "Lead Engineer"});
-        departmentPositionsMap.put("Sales", new String[]{"Sales Representative", "Sales Manager", "Sales VP"});
-        departmentPositionsMap.put("Finance", new String[]{"Finance Analyst", "Accountant", "Director of Finance", "Chief Financial Officer"});
-
-        //past job
-        pastJobPanel.add(new JLabel("Past Job Title:"));
-        previousJobField = new JTextField();
-        pastJobPanel.add(previousJobField);
-
-        //duration
-        pastJobPanel.add(new JLabel("Past Job Duration:"));
-        previousJobDurationField = new JTextField();
-        pastJobPanel.add(previousJobDurationField);
-
-        //reason for leaving past job
-        pastJobPanel.add(new JLabel("Reason for Leaving:"));
-        reasonForLeavingJobField = new JTextField();
-        pastJobPanel.add(reasonForLeavingJobField);
-
-        mainPanel.add(pastJobPanel);
-        saveButton = new JButton("Save Job History");
-        mainPanel.add(new JLabel()); // Empty label for spacing
-        mainPanel.add(saveButton);
-
-        frame.add(mainPanel, BorderLayout.CENTER);
-
-        //action listeners for checkbox, save and department
-        hasPreviousJobCheckbox.addActionListener(new PreviousJobCheckboxHandler());
-        saveButton.addActionListener(new JobHistorySaveEventHandler());
-        currentJobDepartment.addActionListener(new DepartmentSelectionHandler());
-
-        frame.setVisible(true);
+    //checking to see if any fields are empty
+    public boolean validateFields() {
+    if (jobTitle == null || jobTitle.isEmpty() ||
+        companyName == null || companyName.isEmpty() ||
+        startDate == null || startDate.isEmpty() ||
+        endDate == null || endDate.isEmpty() ||
+        department == null || department.equalsIgnoreCase("Select Department") ||
+        position == null || position.equalsIgnoreCase("Select Position")) {
+        return false;
+    }
+    if (pastJobTitle != null && (!validatePastJobFields())) {
+        return false;
+    }
+    return true;
+    }
+    private boolean validatePastJobFields() {
+        return !(pastJobTitle.isEmpty() || pastJobDuration.isEmpty() || reasonForLeaving.isEmpty());
     }
 
-    // event handler that determines the job positions based on the department
-    class DepartmentSelectionHandler implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            String selectedDepartment = (String) currentJobDepartment.getSelectedItem();
-            if (departmentPositionsMap.containsKey(selectedDepartment)) {
-                currentPositionDropdown.removeAllItems();
-                for (String position : departmentPositionsMap.get(selectedDepartment)) {
-                    currentPositionDropdown.addItem(position);
-                }
-            } else {
-                currentPositionDropdown.removeAllItems();
-                currentPositionDropdown.addItem("Select Position");
-            }
-        }
-    }
-
-    //visibitly of past job fields
-    class PreviousJobCheckboxHandler implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            if (hasPreviousJobCheckbox.isSelected()) {
-                pastJobPanel.setVisible(true);
-                frame.setSize(500, 700);
-            } else {
-                pastJobPanel.setVisible(false);
-                frame.setSize(500, 600);
-            }
-        }
-    }
-
-    //save
-    class JobHistorySaveEventHandler implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            String jobTitle = currentJobTitleField.getText();
-            String companyName = currentCompanyNameField.getText();
-            String startDate = startDateField.getText();
-            String endDate = endDateField.getText();
-            String jobDescription = jobDescriptionArea.getText();
-            String selectedDepartment = (String) currentJobDepartment.getSelectedItem();
-            String selectedPosition = (String) currentPositionDropdown.getSelectedItem();
-
-            //error messages
-            if (jobTitle.isEmpty() || companyName.isEmpty() || startDate.isEmpty() || endDate.isEmpty() ||
-                selectedDepartment.equals("Select Department") || selectedPosition.equals("Select Position")) {
-                JOptionPane.showMessageDialog(frame, "Please fill out all fields.", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            if (hasPreviousJobCheckbox.isSelected()) {
-                String pastJobTitle = previousJobField.getText();
-                String pastJobDuration = previousJobDurationField.getText();
-                String reasonForLeaving = reasonForLeavingJobField.getText();
-
-                if (pastJobTitle.isEmpty() || pastJobDuration.isEmpty() || reasonForLeaving.isEmpty()) {
-                    JOptionPane.showMessageDialog(frame, "Please fill out all past job fields.", "Error", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-//display after the save with past job info
-                JOptionPane.showMessageDialog(frame, "Job History Saved:\n" +
-                        "Job Title: " + jobTitle + "\n" +
-                        "Company: " + companyName + "\n" +
-                        "Start Date: " + startDate + "\n" +
-                        "End Date: " + endDate + "\n" +
-                        "Job Description: " + jobDescription + "\n" +
-                        "Department: " + selectedDepartment + "\n" +
-                        "Position: " + selectedPosition + "\n" +
-                        "Past Job Title: " + pastJobTitle + "\n" +
-                        "Past Job Duration: " + pastJobDuration + " months\n" +
-                        "Reason for Leaving: " + reasonForLeaving);
-            } else {
-//without job info
-                JOptionPane.showMessageDialog(frame, "Job History Saved:\n" +
-                        "Job Title: " + jobTitle + "\n" +
-                        "Company: " + companyName + "\n" +
-                        "Start Date: " + startDate + "\n" +
-                        "End Date: " + endDate + "\n" +
-                        "Job Description: " + jobDescription + "\n" +
-                        "Department: " + selectedDepartment + "\n" +
-                        "Position: " + selectedPosition);
-            }
-        }
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(TestGUI::new);
-    }
 }
