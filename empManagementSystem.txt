@@ -1,0 +1,3 @@
+H467, emilia kubik, ekubik1@murraystate.edu, 2246229879, manager, franklin college, murray, ky, 60010, 17, 4, 2005, Female, 29, 9, 2023
+# Sprint Evaluations
+emilia kubik, title, 4, 4, 2022, answer 1, answer 2, answer 3

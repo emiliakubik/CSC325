@@ -485,53 +485,72 @@ public class GUI {
         });
     }
 
+    //show the Sprint Evaluation Panel
     private void showSprintEvalPanel(){
+        //setting up the panel to hold the content for sprint evaluations
         JPanel chooseEmployeePanel = new JPanel(new BorderLayout());
+        //instructs the user on what action to take
         JLabel instructionLabel = new JLabel("Select an employee to create/view Sprint Evaluation.");
+        //user first chooses which employee they would like to evaluate
         JComboBox<String> employeeComboBox = new JComboBox<>();
+        //then choose whether they want to create a new eval or look at past ones
         JComboBox<String> actionComboBox = new JComboBox<>();
 
+        //inputting all the employees entered into the system as options
         for(Employee employee : employeeManagementSystem.getEmployees()){
             employeeComboBox.addItem((String) employee.getFullName());
         }
 
+        //inputting the two options: create new eval or view past evals
         actionComboBox.addItem("Create New Sprint Evaluation");
         actionComboBox.addItem("View Past Sprint Evaluations");
-
+        //creating a panel to hold both combo boxes and them adding the boxes to the panel
         JPanel centerPanel = new JPanel();
         centerPanel.add(employeeComboBox);
         centerPanel.add(actionComboBox);
 
+        //adding the instructions and the dropdown boxes to the main panel
         chooseEmployeePanel.add(instructionLabel, BorderLayout.NORTH);
         chooseEmployeePanel.add(centerPanel, BorderLayout.CENTER);
 
+        //action listener to react when the choices are made from the drop down menus
         actionComboBox.addActionListener(e -> {
+            //gets the selected employee
             Employee selectedEmployee = employeeManagementSystem.getEmployeeByName((String)employeeComboBox.getSelectedItem());
+            //gets the selected action
             String selectedAction = (String) actionComboBox.getSelectedItem();
+            //creates a new SprintEvaluationPanel instance for the selected employee
             SprintEvaluationPanel sprintEvaluationPanel = new SprintEvaluationPanel(selectedEmployee);
 
+            //check which action was selected (Create or View)
             if(selectedAction.equals("Create New Sprint Evaluation")){
+                //if create was selected, calls the create panel from SprintEvaluationPanel class
                 mainPanel.add(sprintEvaluationPanel.getCreatePanel(), selectedEmployee.getFullName() + "'s Sprint Evaluation");
                 cardLayout.show(mainPanel, selectedEmployee.getFullName() + "'s Sprint Evaluation");
             } else if(selectedAction.equals("View Past Sprint Evaluations")){
+                //if view was selected, calls the view panel from SprintEvaluationPanel class
                 mainPanel.add(sprintEvaluationPanel.viewSprintEvalPanel(selectedEmployee), selectedEmployee.getFullName() + "'s Sprint Evaluations");
                 cardLayout.show(mainPanel, selectedEmployee.getFullName() + "'s Sprint Evaluations");
             }
         });
 
+        //adds chooseEmployeePanel to the main panel and shows the panel
         mainPanel.add(chooseEmployeePanel, "Choose Employee");
         cardLayout.show(mainPanel, "Choose Employee");
     }
 
     //takes the list of employees in the new sorted order and updates the data to be displayed correctly
     private Object[][] updateEmployeeTable(List<Employee> employees){
+        //creates a 2D array to hold the emploeye data
         Object[][] data = new Object[employees.size()][4];
+        //loops through each employee in the system
         for (int i = 0; i < employees.size(); i++){
             data[i][0] = employees.get(i).getEmployeeID();
             data[i][1] = employees.get(i).getFullName();
             data[i][2] = employees.get(i).getPosition();
             data[i][3] = employees.get(i).calculateEmployementLength();
         }
+        //return the new populated data array
         return data;
     }
 

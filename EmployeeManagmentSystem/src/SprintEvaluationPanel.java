@@ -1,8 +1,7 @@
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.List;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -45,13 +44,13 @@ public class SprintEvaluationPanel {
         formPanel.add(new JLabel("Title of Evaluation: "));
         formPanel.add(title);
 
-        formPanel.add(new JLabel("Question 1: "));
+        formPanel.add(new JLabel("What have you completed during this sprint?"));
         formPanel.add(question1);
 
-        formPanel.add(new JLabel("Question 2: "));
+        formPanel.add(new JLabel("Is there anything that was not completed?"));
         formPanel.add(question2);
 
-        formPanel.add(new JLabel("Question 3: "));
+        formPanel.add(new JLabel("Any extra comments/thoughts regarding the sprint: "));
         formPanel.add(question3);
 
         formPanel.add(new JLabel("Date of Evaluation: "));
@@ -141,6 +140,7 @@ public class SprintEvaluationPanel {
     private void viewSpecificSprintEvalPanel(String title, List<String> evals){
         JPanel detailPanel = new JPanel(new BorderLayout());
         JLabel titleLabel = new JLabel(title, JLabel.CENTER);
+        titleLabel.setFont(new Font("Verdana", Font.BOLD, 16));
         detailPanel.add(titleLabel, BorderLayout.NORTH);
 
         String matchedEval = null;
@@ -154,19 +154,28 @@ public class SprintEvaluationPanel {
 
         if(matchedEval != null){
             String[] evalParts = matchedEval.split(",");
-            JPanel infoPanel = new JPanel(new GridLayout(4, 2, 5, 5));
+            JPanel infoPanel = new JPanel(new GridLayout(7, 1, 5, 5));
 
             // infoPanel.add(new JLabel("Date: "));
             // infoPanel.add(new JLabel(evalParts[2].trim() + "/" + evalParts[3].trim() + "/" + evalParts[4].trim()));
 
-            infoPanel.add(new JLabel("Question 1 Response: "));
-            infoPanel.add(new JLabel(evalParts[5].trim()));
+            JLabel question1label = new JLabel("What have you completed during this sprint?");
+            JLabel answer1Label = new JLabel(evalParts[5].trim());
+            setStyle(question1label, answer1Label);
+            infoPanel.add(question1label);
+            infoPanel.add(answer1Label);
 
-            infoPanel.add(new JLabel("Question 2 Response: "));
-            infoPanel.add(new JLabel(evalParts[6].trim()));
+            JLabel question2label = new JLabel("Is there anything that was not completed?");
+            JLabel answer2Label = new JLabel(evalParts[6].trim());
+            setStyle(question2label, answer2Label);
+            infoPanel.add(question2label);
+            infoPanel.add(answer2Label);
 
-            infoPanel.add(new JLabel("Question 3 Response: "));
-            infoPanel.add(new JLabel(evalParts[7].trim()));
+            JLabel question3label = new JLabel("Any extra comments/thoughts regarding the sprint: ");
+            JLabel answer3Label = new JLabel(evalParts[7].trim());
+            setStyle(question3label, answer3Label);
+            infoPanel.add(question3label);
+            infoPanel.add(answer3Label);
 
             detailPanel.add(infoPanel, BorderLayout.CENTER);
         } 
@@ -177,5 +186,16 @@ public class SprintEvaluationPanel {
     frame.setSize(400, 300); // Adjust size as needed
     frame.setLocationRelativeTo(null); // Center the frame on screen
     frame.setVisible(true);
+    }
+
+    private void setStyle(JLabel questionLabel, JLabel answerLabel){
+        questionLabel.setFont(new Font("Monospaced", Font.BOLD, 12));
+        questionLabel.setForeground(Color.BLACK);
+        questionLabel.setOpaque(true);
+        questionLabel.setBackground(new Color(230, 230, 250));
+        questionLabel.setBorder(new EmptyBorder(10, 10, 10, 10));
+        
+        answerLabel.setFont(new Font("Monospaced", Font.PLAIN, 12));
+        answerLabel.setForeground(Color.DARK_GRAY);
     }
 }
