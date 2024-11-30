@@ -1,15 +1,7 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-<<<<<<< HEAD
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import javax.swing.*;
-=======
->>>>>>> e9c01f6b7365e3085fb09980e2f941842d545f6a
 
 public class GUI {
 
@@ -61,7 +53,8 @@ public class GUI {
 
         addButton("Job History", new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                showJobHistoryPanel();
+                JobHistoryPanel jobHistoryPanel = new JobHistoryPanel(mainPanel, cardLayout, employeeManagementSystem);
+                jobHistoryPanel.showJobHistoryPanel();
             }
         });
 
@@ -93,6 +86,7 @@ public class GUI {
         button.addActionListener(actionListener);
         buttonPanel.add(button);
     }
+<<<<<<< HEAD
 
     
     // Show the Manage Job History panel
@@ -111,3 +105,6 @@ public class GUI {
 =======
 
 >>>>>>> e9c01f6b7365e3085fb09980e2f941842d545f6a
+=======
+}
+>>>>>>> a8c165e6a8de427c1941ee08d6f416cfbaa03184

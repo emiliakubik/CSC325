@@ -1,8 +1,16 @@
+<<<<<<< HEAD
 import java.util.Comparator;
+=======
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+>>>>>>> a8c165e6a8de427c1941ee08d6f416cfbaa03184
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+<<<<<<< HEAD
 import javax.swing.*;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
@@ -10,6 +18,8 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+=======
+>>>>>>> a8c165e6a8de427c1941ee08d6f416cfbaa03184
 public class JobHistoryPanel {
     private JPanel mainPanel;
     private CardLayout cardLayout;
@@ -20,7 +30,13 @@ public class JobHistoryPanel {
         this.cardLayout = cardLayout;
         this.employeeManagementSystem = employeeManagementSystem;
     }
+<<<<<<< HEAD
     private void showJobHistoryPanel() {
+=======
+
+    // Show the Manage Job History panel
+    public void showJobHistoryPanel() {
+>>>>>>> a8c165e6a8de427c1941ee08d6f416cfbaa03184
         // Initialize panel and layout for job history
         cardLayout.show(mainPanel, "Job History");
         JPanel jobHistoryPanel = new JPanel(new GridLayout(13, 2, 10, 10));
@@ -133,6 +149,20 @@ public class JobHistoryPanel {
          }
      });
     }
+<<<<<<< HEAD
     }
 
     
+=======
+
+    //this is what adds the fields I created to the panel
+    private void addFields(JPanel panel, String[] labels, JComponent[] fields) {
+        for (int i = 0; i < labels.length; i++) {
+            panel.add(new JLabel(labels[i] + ":"));
+            panel.add(fields[i]);
+        }
+    }
+
+    
+}
+>>>>>>> a8c165e6a8de427c1941ee08d6f416cfbaa03184
