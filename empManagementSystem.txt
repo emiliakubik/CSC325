@@ -2,3 +2,7 @@ H467, emilia kubik, ekubik1@murraystate.edu, 2246229879, manager, franklin colle
 S921, name, , , , , , , , 2, 4, 1951, Female, 2, 3, 1953
 # Sprint Evaluations
 emilia kubik, title, 4, 4, 2022, answer 1, answer 2, answer 3
+emilia kubik, , -day-, -month-, -year-, Enter response here, Enter response here, Enter response here
+
+
+S285,  Trinity,  tnoble3@murraystat.edu,  7723325175,  Employee,  1700 Lowes Dr,  Murray,  KY,  42071, 4, 6, 2005, Female, 5, 4, 2023

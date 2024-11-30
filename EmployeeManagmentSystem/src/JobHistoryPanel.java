@@ -1,10 +1,8 @@
-import javax.swing.*;
+
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import javax.swing.*;
 
 public class JobHistoryPanel {
     private JPanel mainPanel;

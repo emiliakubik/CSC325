@@ -8,7 +8,6 @@ public class GUI {
     private JFrame frame;
     private JPanel mainPanel, buttonPanel;
     private CardLayout cardLayout;
-
     private EmployeeManagementSystem employeeManagementSystem;
 
     public GUI() {
@@ -27,16 +26,22 @@ public class GUI {
 
         // Create button panel for navigation
         buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(5, 1));
-
+        buttonPanel.setLayout(new GridLayout(6, 1));
+        
         // Add buttons for each key feature
+        addButton("Dashboard", new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                DashboardPanel dashboardPanel = new DashboardPanel(mainPanel, cardLayout, employeeManagementSystem);
+                dashboardPanel.showDashboard();
+            }
+        });
         addButton("Create Employee", new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 CreateEmployeePanel createEmployeePanel = new CreateEmployeePanel(mainPanel, cardLayout, employeeManagementSystem);
                 createEmployeePanel.showCreateEmployeePanel();
             }
         });
-
+      
         addButton("View Employees", new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 ViewAndEditEmployee viewAndEditEmployee = new ViewAndEditEmployee(mainPanel, cardLayout, employeeManagementSystem);
@@ -70,7 +75,8 @@ public class GUI {
         mainPanel.add(new JPanel(), "View Employees");  // Placeholder panel
         mainPanel.add(new JPanel(), "Delete Employee"); // Placeholder panel
         mainPanel.add(new JPanel(), "Job History"); // Placeholder panel
-        
+        DashboardPanel dashboardPanel = new DashboardPanel(mainPanel, cardLayout, employeeManagementSystem);
+        dashboardPanel.showDashboard();
         // Layout for the frame
         frame.setLayout(new BorderLayout());
         frame.add(buttonPanel, BorderLayout.WEST);  // Buttons on the left
@@ -86,4 +92,5 @@ public class GUI {
         button.addActionListener(actionListener);
         buttonPanel.add(button);
     }
-}
+
+    }
