@@ -1,8 +1,7 @@
-import java.lang.Math;
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 public class Employee {
     //all the employee properties 
     private String employeeID;
@@ -221,6 +220,16 @@ public class Employee {
         id += (char)((int)(Math.random() * 26) + 65);
         id += ((int)(Math.random() * 900) + 100);
         return id;
+    }
+
+    //this method is what will display the employee's information for the search:
+    public String toString() {
+        return "ID: " + employeeID + 
+               ", Name: " + fullName + 
+               ", Position: " + position + 
+               ", Email: " + email + 
+               ", Phone: " + phoneNumber + 
+               ", Employed: " + calculateEmployementLength();
     }
 }
 
