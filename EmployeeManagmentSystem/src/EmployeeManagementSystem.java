@@ -1,6 +1,6 @@
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.io.*;
 
 public class EmployeeManagementSystem{
     //this is the txt file that all employee info will be kept on
@@ -216,5 +216,27 @@ public class EmployeeManagementSystem{
             System.out.println("Unable to read from file.");
         }
         return employeeEvals;
+    }
+    public int getTotalSprintEvaluations() {
+        int sprintEvalCount = 0;
+        boolean sprintEvalSectionFound = false;
+    
+        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
+            String line;
+    
+            while ((line = reader.readLine()) != null) {
+                line = line.trim();
+                if (line.equals("# Sprint Evaluations")) {
+                    sprintEvalSectionFound = true;
+                    continue;
+                }
+                if (sprintEvalSectionFound && !line.isEmpty()) {
+                    sprintEvalCount++;
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Unable to read from file.");
+        }
+        return sprintEvalCount;
     }
 }

@@ -26,21 +26,22 @@ public class GUI {
 
         // Create button panel for navigation
         buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(7, 1));
+        buttonPanel.setLayout(new GridLayout(6, 1));
         
         // Add buttons for each key feature
-        //addButton("Dashboard", e -> showDashboard());
+        addButton("Dashboard", new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                DashboardPanel dashboardPanel = new DashboardPanel(mainPanel, cardLayout, employeeManagementSystem);
+                dashboardPanel.showDashboard();
+            }
+        });
         addButton("Create Employee", new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 CreateEmployeePanel createEmployeePanel = new CreateEmployeePanel(mainPanel, cardLayout, employeeManagementSystem);
                 createEmployeePanel.showCreateEmployeePanel();
             }
         });
-        addButton("Search Employee", e -> {
-            SearchBar searchBar = new SearchBar(mainPanel, cardLayout, employeeManagementSystem);
-            searchBar.showSearchPanel();
-        });
-
+      
         addButton("View Employees", new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 ViewAndEditEmployee viewAndEditEmployee = new ViewAndEditEmployee(mainPanel, cardLayout, employeeManagementSystem);
@@ -74,7 +75,8 @@ public class GUI {
         mainPanel.add(new JPanel(), "View Employees");  // Placeholder panel
         mainPanel.add(new JPanel(), "Delete Employee"); // Placeholder panel
         mainPanel.add(new JPanel(), "Job History"); // Placeholder panel
-        
+        DashboardPanel dashboardPanel = new DashboardPanel(mainPanel, cardLayout, employeeManagementSystem);
+        dashboardPanel.showDashboard();
         // Layout for the frame
         frame.setLayout(new BorderLayout());
         frame.add(buttonPanel, BorderLayout.WEST);  // Buttons on the left
@@ -91,16 +93,4 @@ public class GUI {
         buttonPanel.add(button);
     }
 
-
-    
-    // Show the Manage Job History panel
-  
-    
-  //this is what adds the fields I created to the panel
-    private void addFields(JPanel panel, String[] labels, JComponent[] fields) {
-        for (int i = 0; i < labels.length; i++) {
-            panel.add(new JLabel(labels[i] + ":"));
-            panel.add(fields[i]);
-        }
     }
-}
