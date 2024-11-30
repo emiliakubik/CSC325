@@ -1,11 +1,10 @@
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.List;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.JTableHeader;
-
-import java.awt.*;
-import java.util.List;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class SprintEvaluationPanel {
     private JPanel mainPanel;
@@ -158,8 +157,44 @@ public class SprintEvaluationPanel {
             String selectedMonth = (String) evalMonthCombo.getSelectedItem();
             String selectedYear = (String) evalYearCombo.getSelectedItem();
 
-            SprintEvaluation eval = new SprintEvaluation(employee.getFullName().trim(), evaluationTitle, response1, response2, response3, selectedDay, selectedMonth, selectedYear);
-
+            //SprintEvaluation eval = new SprintEvaluation(employee.getFullName().trim(), evaluationTitle, response1, response2, response3, selectedDay, selectedMonth, selectedYear);
+            if (evaluationTitle.isEmpty()) {
+                JOptionPane.showMessageDialog(sprintEvalPanel, "Please provide a title for the evaluation.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        
+            if (response1.isEmpty()) {
+                JOptionPane.showMessageDialog(sprintEvalPanel, "Please answer Question 1.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        
+            if (response2.isEmpty()) {
+                JOptionPane.showMessageDialog(sprintEvalPanel, "Please answer Question 2.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        
+            if (response3.isEmpty()) {
+                JOptionPane.showMessageDialog(sprintEvalPanel, "Please answer Question 3.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        
+            if ("-day-".equals(selectedDay) || "-month-".equals(selectedMonth) || "-year-".equals(selectedYear)) {
+                JOptionPane.showMessageDialog(sprintEvalPanel, "Please select a valid evaluation date.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        
+            // If all validations pass, create and save the evaluation
+            SprintEvaluation eval = new SprintEvaluation(
+                employee.getFullName().trim(),
+                evaluationTitle,
+                response1,
+                response2,
+                response3,
+                selectedDay,
+                selectedMonth,
+                selectedYear
+            );
+        
             employee.addSprintEval(eval);
             employeeManagementSystem.addSprintEval(eval);
 

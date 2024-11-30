@@ -8,7 +8,6 @@ public class GUI {
     private JFrame frame;
     private JPanel mainPanel, buttonPanel;
     private CardLayout cardLayout;
-
     private EmployeeManagementSystem employeeManagementSystem;
 
     public GUI() {
@@ -27,14 +26,19 @@ public class GUI {
 
         // Create button panel for navigation
         buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(5, 1));
-
+        buttonPanel.setLayout(new GridLayout(7, 1));
+        
         // Add buttons for each key feature
+        //addButton("Dashboard", e -> showDashboard());
         addButton("Create Employee", new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 CreateEmployeePanel createEmployeePanel = new CreateEmployeePanel(mainPanel, cardLayout, employeeManagementSystem);
                 createEmployeePanel.showCreateEmployeePanel();
             }
+        });
+        addButton("Search Employee", e -> {
+            SearchBar searchBar = new SearchBar(mainPanel, cardLayout, employeeManagementSystem);
+            searchBar.showSearchPanel();
         });
 
         addButton("View Employees", new ActionListener() {
@@ -86,7 +90,7 @@ public class GUI {
         button.addActionListener(actionListener);
         buttonPanel.add(button);
     }
-<<<<<<< HEAD
+
 
     
     // Show the Manage Job History panel
@@ -99,12 +103,4 @@ public class GUI {
             panel.add(fields[i]);
         }
     }
-<<<<<<< HEAD
 }
-    
-=======
-
->>>>>>> e9c01f6b7365e3085fb09980e2f941842d545f6a
-=======
-}
->>>>>>> a8c165e6a8de427c1941ee08d6f416cfbaa03184
