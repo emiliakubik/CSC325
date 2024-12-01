@@ -20,7 +20,13 @@ public class JobHistoryPanel {
         // Initialize panel and layout for job history
         cardLayout.show(mainPanel, "Job History");
         JPanel jobHistoryPanel = new JPanel(new GridLayout(13, 2, 10, 10));
-    
+        
+        JLabel employeeLabel = new JLabel("Select Employee:");
+        JComboBox<String> employeeDropdown = new JComboBox<>();
+        populateEmployeeDropdown(employeeDropdown);
+        jobHistoryPanel.add(employeeLabel);
+        jobHistoryPanel.add(employeeDropdown);
+
         // Text fields for job details
         JTextField jobTitleField = new JTextField();
         JTextField companyNameField = new JTextField();
@@ -90,6 +96,14 @@ public class JobHistoryPanel {
         //action listener for the submit button
         submitButton.addActionListener(e -> {
             try {
+                String selectedEmployeeName = (String) employeeDropdown.getSelectedItem();
+                Employee selectedEmployee = employeeManagementSystem.getEmployeeByName(selectedEmployeeName);
+        
+                if (selectedEmployee == null) {
+                    JOptionPane.showMessageDialog(mainPanel, "Please select a valid employee.");
+                    return;
+                }
+        
                 String jobTitle = jobTitleField.getText();
                 String companyName = companyNameField.getText();
                 String startDate = startDateField.getText();
@@ -97,38 +111,34 @@ public class JobHistoryPanel {
                 String jobDescription = jobDescriptionField.getText();
                 String department = (String) departmentDropDown.getSelectedItem();
                 String position = (String) positionDropDown.getSelectedItem();
-    
+        
                 if ("Select Department".equals(department) || "Select Position".equals(position)) {
                     JOptionPane.showMessageDialog(mainPanel, "Please select a valid department and position.");
                     return;
                 }
+        
                 JobHistory jobHistory;
                 if (hasPastJobCheckBox.isSelected()) {
                     String pastJobTitle = pastJobTitleField.getText();
                     String pastJobDuration = pastJobDurationField.getText();
                     String reasonForLeaving = reasonForLeavingField.getText();
+        
                     if (pastJobTitle.isEmpty() || pastJobDuration.isEmpty() || reasonForLeaving.isEmpty()) {
                         JOptionPane.showMessageDialog(mainPanel, "Please fill all past job details.");
                         return;
                     }
                     jobHistory = new JobHistory(jobTitle, companyName, startDate, endDate, jobDescription, department, position,
-                            pastJobTitle, pastJobDuration, reasonForLeaving);
+                                                pastJobTitle, pastJobDuration, reasonForLeaving);
                 } else {
                     jobHistory = new JobHistory(jobTitle, companyName, startDate, endDate, jobDescription, department, position);
                 }
-                if (!jobHistory.validateFields()) {
-                    JOptionPane.showMessageDialog(mainPanel, "Please fill all required fields.");
-                    return;
-                }
-    
-        //saving confirmation message
-        JOptionPane.showMessageDialog(mainPanel, "Job History Saved.\n" + jobHistory.toString());
-        //throws an exception if there was an error while saving
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(mainPanel, "Error Saving. " + ex.getMessage());
-         }
-     });
-    }
+        
+                attachJobHistoryToEmployee(selectedEmployee, jobHistory);
+                JOptionPane.showMessageDialog(mainPanel, "Job History Saved:\n" + jobHistory.toString());
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(mainPanel, "Error Saving: " + ex.getMessage());
+            }
+        });
 
     //this is what adds the fields I created to the panel
     private void addFields(JPanel panel, String[] labels, JComponent[] fields) {
@@ -137,6 +147,23 @@ public class JobHistoryPanel {
             panel.add(fields[i]);
         }
     }
+    public void addJobHistoryToEmployee(String employeeID, JobHistory jobHistory) {
+        List<Employee> employees = getEmployees(); 
+        for (Employee employee : employees) {
+            if (employee.getEmployeeID().equals(employeeID)) {
+                employee.addJobHistory(jobHistory);
+                saveEmployees(employees); 
+                System.out.println("Job history added successfully.");
+                return;
+            }
+        }
+        System.out.println("Employee not found.");
+    }
 
+    private void populateEmployeeDropdown(JComboBox<String> employeeDropdown) {
+        for (Employee employee : employeeManagementSystem.getAllEmployees()) {
+            employeeDropdown.addItem(employee.getFullName());
+        }
+    }
     
 }

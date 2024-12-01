@@ -1,10 +1,6 @@
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.List;
 
 public class JobHistory {
+    
     private String jobTitle;
     private String companyName;
     private String startDate;
@@ -12,11 +8,11 @@ public class JobHistory {
     private String jobDescription;
     private String department;
     private String position;
-    
     //fields needed only if employee has a past job
     private String pastJobTitle;
     private String pastJobDuration; //to be entered in months
     private String reasonForLeaving;
+    private Employee associatedEmployee;
 
     //job details constructor
     public JobHistory(String jobTitle, String companyName, String startDate, String endDate, String jobDescription, String department, String position){
