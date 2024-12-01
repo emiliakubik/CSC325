@@ -14,19 +14,24 @@ public class StartupScreen {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(350, 450);
 
-        // Set the layout manager
-        frame.setLayout(new BorderLayout());
+        // Load the logo image
+        ImageIcon logoIcon = new ImageIcon("EmployeeManagmentSystem/src/images/HR_APP_logo.png");
+        Image logoImage = logoIcon.getImage();
 
-        // Create the content panel with white background
+        // Resize the image to 400x400
+        Image resizedImage = logoImage.getScaledInstance(400, 400, Image.SCALE_SMOOTH);
+
+        // Create a new ImageIcon with the resized image
+        ImageIcon resizedIcon = new ImageIcon(resizedImage);
+
+        // Create a label with the resized logo
+        JLabel logoLabel = new JLabel(resizedIcon);
+        logoLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // Center the image
+
+        // Create the content panel and set the layout manager
         JPanel contentPanel = new JPanel();
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
         contentPanel.setBackground(Color.WHITE); // Set background to white
-
-        // Load the logo without resizing it
-        ImageIcon logoIcon = new ImageIcon("CSC325\\EmployeeManagmentSystem\\src\\images\\HR_APP_logo.png");
-
-        JLabel logoLabel = new JLabel(logoIcon);
-        logoLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // Center the image
 
         // Add the logo label to the content panel
         contentPanel.add(Box.createVerticalGlue()); // Add glue to center the logo
