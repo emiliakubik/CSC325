@@ -8,7 +8,7 @@ public class Employee {
     private String fullName;
     private String email;
     private String phoneNumber;
-    private String position;
+    private String role;
     private String street;
     private String city;
     private String state;
@@ -21,14 +21,15 @@ public class Employee {
     private String employmentMonth;
     private String employmentYear;
     private List<SprintEvaluation> sprintEvals = new ArrayList<>();
+    private List<JobHistory> jobHistories = new ArrayList<>();
 
     //constructor that initializes all the employee info, but this is for new employees being added because it generates them a new ID
-    public Employee(String fullName, String email, String phoneNumber, String position, String street, String city, String state, String zipCode, String birthDay, String birthMonth, String birthYear, String gender, String employmentDay, String employmentMonth, String employmentYear){
+    public Employee(String fullName, String email, String phoneNumber, String role, String street, String city, String state, String zipCode, String birthDay, String birthMonth, String birthYear, String gender, String employmentDay, String employmentMonth, String employmentYear){
         this.employeeID = generateID();
         this.fullName = fullName;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.position = position;
+        this.role = role;
         this.street = street;
         this.city = city;
         this.state = state;
@@ -43,12 +44,12 @@ public class Employee {
     }
 
     //constructor for an employee that already exists because they already have an ID
-    public Employee(String employeeID, String fullName, String email, String phoneNumber, String position, String street, String city, String state, String zipCode, String birthDay, String birthMonth, String birthYear, String gender, String employmentDay, String employmentMonth, String employmentYear){
+    public Employee(String employeeID, String fullName, String email, String phoneNumber, String role, String street, String city, String state, String zipCode, String birthDay, String birthMonth, String birthYear, String gender, String employmentDay, String employmentMonth, String employmentYear){
         this.employeeID = employeeID;
         this.fullName = fullName;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.position = position;
+        this.role = role;
         this.street = street;
         this.city = city;
         this.state = state;
@@ -95,12 +96,12 @@ public class Employee {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getPosition(){
-        return position;
+    public String getRole(){
+        return role;
     }
 
-    public void setPosition(String position){
-        this.position = position;
+    public void setRole(String role){
+        this.role = role;
     }
 
     public String getStreet(){
@@ -221,15 +222,33 @@ public class Employee {
         id += ((int)(Math.random() * 900) + 100);
         return id;
     }
+    
 
     //this method is what will display the employee's information for the search:
     public String toString() {
         return "ID: " + employeeID + 
                ", Name: " + fullName + 
-               ", Position: " + position + 
+               ", Role: " + role + 
                ", Email: " + email + 
                ", Phone: " + phoneNumber + 
                ", Employed: " + calculateEmployementLength();
+    }
+    public void addJobHistory(JobHistory jobHistory) {
+        jobHistories.add(jobHistory);
+    }
+
+    // Get all job histories
+    public List<JobHistory> getJobHistories() {
+        return jobHistories;
+    }
+
+    // Display job history information
+    public String displayJobHistories() {
+        StringBuilder historyDisplay = new StringBuilder("Job Histories:\n");
+        for (JobHistory jobHistory : jobHistories) {
+            historyDisplay.append(jobHistory.toString()).append("\n");
+        }
+        return historyDisplay.toString();
     }
 }
 

@@ -3,7 +3,6 @@ import java.awt.CardLayout;
 import java.awt.FlowLayout;
 import javax.swing.*;
 
-
 public class SearchBar {
     private JPanel mainPanel;
     private CardLayout cardLayout;
@@ -14,8 +13,8 @@ public class SearchBar {
         this.cardLayout = cardLayout;
         this. employeeManagementSystem = employeeManagementSystem;
     }
+    //this is the creation of the searchbar panel
     public JPanel createSearchPanel() {
-        // Create the search panel
         JPanel searchPanel = new JPanel(new BorderLayout(10, 10));
         JPanel searchInputPanel = new JPanel(new FlowLayout());
         JTextField searchField = new JTextField(20);
@@ -24,7 +23,6 @@ public class SearchBar {
         searchInputPanel.add(searchField);
         searchInputPanel.add(searchButton);
     
-        // Results display section
         JPanel resultsPanel = new JPanel(new BorderLayout());
         JTextArea resultsArea = new JTextArea(20, 40);
         resultsArea.setEditable(false);
@@ -34,7 +32,7 @@ public class SearchBar {
         searchPanel.add(searchInputPanel, BorderLayout.NORTH);
         searchPanel.add(resultsPanel, BorderLayout.CENTER);
     
-        // Add search functionality
+        //this is the method for the search
         searchButton.addActionListener(e -> {
             String query = searchField.getText().trim();
     
@@ -43,7 +41,7 @@ public class SearchBar {
                 return;
             }
     
-            // Display search results
+//this is what displays whatever the search results are 
             String results = searchForEmployee(query);
             resultsArea.setText(results.isEmpty() ? "No results found." : results);
         });

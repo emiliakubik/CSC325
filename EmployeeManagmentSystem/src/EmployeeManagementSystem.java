@@ -28,13 +28,13 @@ public class EmployeeManagementSystem{
                 }
             }
 
-            String employeeData = employee.getEmployeeID() + ", " + employee.getFullName() + ", " + employee.getEmail() + ", " + employee.getPhoneNumber() + ", " + employee.getPosition() + ", " + employee.getStreet() + ", " + employee.getCity() + ", " + employee.getState() + ", " + employee.getZipCode() + ", " + employee.getBirthDay() + ", " + employee.getBirthMonth() + ", " + employee.getBirthYear() + ", " + employee.getGender() + ", " + employee.getEmploymentDay() + ", " + employee.getEmploymentMonth() + ", " + employee.getEmploymentYear();
+            String employeeData = employee.getEmployeeID() + ", " + employee.getFullName() + ", " + employee.getEmail() + ", " + employee.getPhoneNumber() + ", " + employee.getRole() + ", " + employee.getStreet() + ", " + employee.getCity() + ", " + employee.getState() + ", " + employee.getZipCode() + ", " + employee.getBirthDay() + ", " + employee.getBirthMonth() + ", " + employee.getBirthYear() + ", " + employee.getGender() + ", " + employee.getEmploymentDay() + ", " + employee.getEmploymentMonth() + ", " + employee.getEmploymentYear();
             if(sprintEvalSectionFound && sprintEvalIndex != -1){
                 fileContent.add(sprintEvalIndex, employeeData);
             } else {
                 fileContent.add(employeeData);
             }
-
+            
             try(BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, false))){ //"true" allows appending to an already written file, rather than that previous data getting removed
                 for(String line : fileContent){
                     writer.write(line);
@@ -43,6 +43,27 @@ public class EmployeeManagementSystem{
             } 
         } catch (IOException e){ //exception handling incase for some reason this info cannot be appended to the file
             System.out.println("Unable to write to file.");
+        }
+        
+        
+    }
+    private void saveEmployees(List<Employee> employees) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH))) {
+            for (Employee employee : employees) {
+                // Write employee info
+                writer.write(employee.getEmployeeID() + ", " + employee.getFullName() + ", " + employee.getEmail() + ", " + employee.getPhoneNumber() + ", " + employee.getRole() + ", " + employee.getStreet() + ", " + employee.getCity() + ", " + employee.getState() + ", " + employee.getZipCode() + ", " + employee.getBirthDay() + ", " + employee.getBirthMonth() + ", " + employee.getBirthYear() + ", " + employee.getGender() + ", " + employee.getEmploymentDay() + ", " + employee.getEmploymentMonth() + ", " + employee.getEmploymentYear());
+                writer.newLine();
+
+                // Write job histories
+                for (JobHistory jobHistory : employee.getJobHistories()) {
+                    writer.write("# JobHistory");
+                    writer.newLine();
+                    writer.write(jobHistory.toString());
+                    writer.newLine();
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Unable to save employees to file.");
         }
     }
 
@@ -89,7 +110,7 @@ public class EmployeeManagementSystem{
         try(BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, true))){
             for (Employee emp : employees){
                 if (emp.getEmployeeID().equals(updatedEmp.getEmployeeID())){
-                    writer.write(updatedEmp.getEmployeeID() + ", " + updatedEmp.getFullName() + ", " + updatedEmp.getEmail() + ", " + updatedEmp.getPhoneNumber() + ", " + updatedEmp.getPosition() + ", " + updatedEmp.getStreet() + ", " + updatedEmp.getCity() + ", " + updatedEmp.getState() + ", " + updatedEmp.getZipCode() + ", " + updatedEmp.getBirthDay() + ", " + updatedEmp.getBirthMonth() + ", " + updatedEmp.getBirthYear() + ", " + updatedEmp.getGender() + ", " + updatedEmp.getEmploymentDay() + ", " + updatedEmp.getEmploymentMonth() + ", " + updatedEmp.getEmploymentYear());
+                    writer.write(updatedEmp.getEmployeeID() + ", " + updatedEmp.getFullName() + ", " + updatedEmp.getEmail() + ", " + updatedEmp.getPhoneNumber() + ", " + updatedEmp.getRole() + ", " + updatedEmp.getStreet() + ", " + updatedEmp.getCity() + ", " + updatedEmp.getState() + ", " + updatedEmp.getZipCode() + ", " + updatedEmp.getBirthDay() + ", " + updatedEmp.getBirthMonth() + ", " + updatedEmp.getBirthYear() + ", " + updatedEmp.getGender() + ", " + updatedEmp.getEmploymentDay() + ", " + updatedEmp.getEmploymentMonth() + ", " + updatedEmp.getEmploymentYear());
                     writer.newLine();
                 } else {
                     writer.newLine();
@@ -168,7 +189,7 @@ public class EmployeeManagementSystem{
                     String name = details[1];
                     String email = details[2];
                     String phone = details[3];
-                    String position = details[4];
+                    String role = details[4];
                     String street = details[5];
                     String city = details[6];
                     String state = details[7];
@@ -182,7 +203,7 @@ public class EmployeeManagementSystem{
                     String employmentYear = details[15].trim();
 
                     //to do this, it just calls the Employee constructor and creates a completely new employee
-                    Employee employee = new Employee(id, name, email, phone, position, street, city, state, zipCode, birthDay, birthMonth, birthYear, gender, employmentDay, employmentMonth, employmentYear);
+                    Employee employee = new Employee(id, name, email, phone, role, street, city, state, zipCode, birthDay, birthMonth, birthYear, gender, employmentDay, employmentMonth, employmentYear);
                     employeeList.add(employee);
                 }
             }
