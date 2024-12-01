@@ -14,7 +14,7 @@ public class GUI {
         employeeManagementSystem = new EmployeeManagementSystem();
 
         // Initialize the main frame
-        frame = new JFrame("Employee Management System");
+        frame = new JFrame("WorkWatch");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800, 600); // Initial resolution when minimized
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Windowed fullscreen
@@ -99,11 +99,10 @@ public class GUI {
             }
         });
 
-        // Add a space panel after the last button (empty JPanel for padding at the
-        // bottom)
-        JPanel emptyPanel = new JPanel(); // Explicitly create the panel
-        emptyPanel.setBackground(Color.decode("#F2F2F2")); // Set the desired background color
-        buttonPanel.add(emptyPanel); // Add the empty panel to the button panel
+        // Add a space panel after the last button
+        JPanel emptyPanel = new JPanel(); 
+        emptyPanel.setBackground(Color.decode("#F2F2F2"));
+        buttonPanel.add(emptyPanel); 
 
         // Add the Exit button
         addButton("Exit", new ActionListener() {
