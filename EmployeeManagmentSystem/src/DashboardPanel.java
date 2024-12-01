@@ -14,24 +14,17 @@ public class DashboardPanel {
         this.employeeManagementSystem = employeeManagementSystem;
     }
 
-    // Method to show the dashboard
     public void showDashboard() {
-        // Create a new panel for the dashboard
         JPanel dashboardPanel = new JPanel(new BorderLayout());
 
-        // Add the default header to this dashboard panel
         addDefaultHeader(dashboardPanel);
-
-        // Create a panel to display key indicators
         JPanel keyIndicatorsPanel = createKeyIndicatorsPanel();
         dashboardPanel.add(keyIndicatorsPanel, BorderLayout.CENTER);
 
-        // Add the search bar to the dashboard
+        //This is what adds the search bar to the dashboard
         SearchBar searchBar = new SearchBar(mainPanel, cardLayout, employeeManagementSystem);
         JPanel searchBarPanel = searchBar.createSearchPanel();
         dashboardPanel.add(searchBarPanel, BorderLayout.SOUTH);
-
-        // Add the dashboard panel to the main panel and show it
         mainPanel.add(dashboardPanel, "Dashboard");
         cardLayout.show(mainPanel, "Dashboard");
     }
@@ -50,13 +43,13 @@ public class DashboardPanel {
         JPanel keyIndicatorsPanel = new JPanel(new GridLayout(2, 1, 10, 10));
         keyIndicatorsPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         List<Employee> employees = employeeManagementSystem.getEmployees();
+        //these get the number of employees and sprint evaluations from the textfile
         int numberOfEmployees = employees != null ? employees.size() : 0;
         int numberOfSprintEvaluations = employeeManagementSystem.getTotalSprintEvaluations();
 
 
         JLabel totalEmployeesLabel = new JLabel("Total Employees: " + numberOfEmployees, JLabel.CENTER);
         totalEmployeesLabel.setFont(new Font("Arial", Font.PLAIN, 16));
-
         JLabel sprintEvaluationsLabel = new JLabel("Total Sprint Evaluations: " + numberOfSprintEvaluations, JLabel.CENTER);
         sprintEvaluationsLabel.setFont(new Font("Arial", Font.PLAIN, 16));
 

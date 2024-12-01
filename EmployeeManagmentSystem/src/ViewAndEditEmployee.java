@@ -1,11 +1,11 @@
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Comparator;
 import java.util.List;
 import javax.swing.*;
-import javax.swing.table.JTableHeader;
-import java.awt.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import javax.swing.table.JTableHeader;
 
 public class ViewAndEditEmployee {
     private JPanel mainPanel;
@@ -27,10 +27,14 @@ public class ViewAndEditEmployee {
         JTextField nameField = new JTextField(employee.getFullName());
         JTextField emailField = new JTextField(employee.getEmail());
         JTextField phoneNumberField = new JTextField(employee.getPhoneNumber());
-        JTextField positionField = new JTextField(employee.getPosition());
+        JComboBox<String> roleCombo = new JComboBox<>(new String[]{"Admin","Manager","Employee"});
+        roleCombo.setSelectedItem(employee.getRole().trim());
         JTextField streetField = new JTextField(employee.getStreet());
         JTextField cityField = new JTextField(employee.getCity());
-        JTextField stateField = new JTextField(employee.getState());
+        JComboBox<String> stateCombo = new JComboBox<>(new String[]{"AL", "AK", "AZ", "AR", "AS", "CA", "CO", "CT", "DE", "DC", "FL","GA","GU","HI"
+        ,"ID", "IL","IN","IA", "KS","KY","LA","ME","MD","MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ","NM","NY","NC","ND", "OH","OK","OR","PA",
+        "PR","RI","SC","SD","TN","TX","UT","VT","VI","VA","WA","WV","WI","WY"});
+        stateCombo.setSelectedItem(employee.getState().trim());
         JTextField zipCodeField = new JTextField(employee.getZipCode());
         JComboBox<String> genderCombo = new JComboBox<>(new String[]{"Male", "Female"});
         genderCombo.setSelectedItem(employee.getGender().trim());
@@ -92,10 +96,10 @@ public class ViewAndEditEmployee {
         editEmployeePanel.add(numberLabel);
         editEmployeePanel.add(phoneNumberField);
 
-        JLabel positionLabel = new JLabel("Position: ");
-        SetStyle.setInstructionText(positionLabel);
-        editEmployeePanel.add(positionLabel);
-        editEmployeePanel.add(positionField);
+        JLabel roleLabel = new JLabel("Role: ");
+        SetStyle.setInstructionText(roleLabel);
+        editEmployeePanel.add(roleLabel);
+        editEmployeePanel.add(roleCombo);
 
         JLabel streetLabel = new JLabel("Street Address: ");
         SetStyle.setInstructionText(streetLabel);
@@ -110,7 +114,7 @@ public class ViewAndEditEmployee {
         JLabel stateLabel = new JLabel("State: ");
         SetStyle.setInstructionText(stateLabel);
         editEmployeePanel.add(stateLabel);
-        editEmployeePanel.add(stateField);
+        editEmployeePanel.add(stateCombo);
 
         JLabel zipLabel = new JLabel("Zip Code: ");
         SetStyle.setInstructionText(zipLabel);
@@ -156,10 +160,10 @@ public class ViewAndEditEmployee {
             employee.setFullName(nameField.getText());
             employee.setEmail(emailField.getText());
             employee.setPhoneNumber(phoneNumberField.getText());
-            employee.setPosition(positionField.getText());
+            employee.setRole((String) roleCombo.getSelectedItem());
             employee.setStreet(streetField.getText());
             employee.setCity(cityField.getText());
-            employee.setState(stateField.getText());
+            employee.setState((String) stateCombo.getSelectedItem());
             employee.setZipCode(zipCodeField.getText());
             employee.setGender((String) genderCombo.getSelectedItem());
             employee.setBirthDay((String) dayCombo.getSelectedItem());
@@ -180,11 +184,11 @@ public class ViewAndEditEmployee {
 
     // Show the View Employees panel
     public void showViewEmployeesPanel() {
-        //setting up panel and table for overview of all employees (will only be able to see id, name, position and years employed here- to view rest of info must call on name)
+        //setting up panel and table for overview of all employees (will only be able to see id, name, role and years employed here- to view rest of info must call on name)
         JPanel viewEmployeesPanel = new JPanel(new BorderLayout());
 
         //names of all the fields that will be displayed
-        String[] columnNames = {"ID", "Name", "Position", "Years Employed"};
+        String[] columnNames = {"ID", "Name", "Role", "Years Employed"};
         //retrieving a list of all the currently saved employees in the system
         List<Employee> employees = employeeManagementSystem.getEmployees();
         //using a two-dimensional array whose domain will be the 4 fields and range will be however many employees are in the system
@@ -194,7 +198,7 @@ public class ViewAndEditEmployee {
         for(int i = 0; i < employees.size(); i++){
             data[i][0] = employees.get(i).getEmployeeID();
             data[i][1] = employees.get(i).getFullName();
-            data[i][2] = employees.get(i).getPosition();
+            data[i][2] = employees.get(i).getRole();
             data[i][3] = employees.get(i).calculateEmployementLength();
         }
 
@@ -205,10 +209,10 @@ public class ViewAndEditEmployee {
         SetStyle.setTableHeaderText(tableHeader);
         viewEmployeesPanel.add(new JScrollPane(employeeTable), BorderLayout.CENTER);
 
-        //create a drop down menu that can allow use to sort by name(alphabetically), position(alphabetically), and years employed(low-high)
+        //create a drop down menu that can allow use to sort by name(alphabetically), role(alphabetically), and years employed(low-high)
         JPanel sortPanel = new JPanel();
         JLabel sortLabel = new JLabel("Sort: ");
-        String[] sortOptions = {"by Name", "by Position", "by Years Employed"};
+        String[] sortOptions = {"by Name", "by role", "by Years Employed"};
         JComboBox<String> sortComboBox = new JComboBox<>(sortOptions);
         sortPanel.add(sortLabel);
         sortPanel.add(sortComboBox);
@@ -225,8 +229,8 @@ public class ViewAndEditEmployee {
                     case "by Name":
                         employees.sort(Comparator.comparing(Employee::getFullName));
                         break;
-                    case "by Position":
-                        employees.sort(Comparator.comparing(Employee::getPosition));
+                    case "by role":
+                        employees.sort(Comparator.comparing(Employee::getRole));
                         break;
                     case "by Years Employed":
                         employees.sort(Comparator.comparing(Employee::calculateEmployementLength));
@@ -268,7 +272,7 @@ public class ViewAndEditEmployee {
         for (int i = 0; i < employees.size(); i++){
             data[i][0] = employees.get(i).getEmployeeID();
             data[i][1] = employees.get(i).getFullName();
-            data[i][2] = employees.get(i).getPosition();
+            data[i][2] = employees.get(i).getRole();
             data[i][3] = employees.get(i).calculateEmployementLength();
         }
         //return the new populated data array

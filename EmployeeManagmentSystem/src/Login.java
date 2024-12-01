@@ -24,19 +24,19 @@ public class Login {
         loginPanel.setLayout(new GridLayout(3, 2));
 
         // Add username and password fields
-        JLabel usernameLabel = new JLabel("Username: ");
-        JTextField usernameField = new JTextField(20);
-        JLabel passwordLabel = new JLabel("Password: ");
-        JPasswordField passwordField = new JPasswordField(20);
+        JLabel employeeIDLabel = new JLabel("Employee ID: ");
+        JTextField employeeIDField = new JTextField(20);
+        JLabel birthdateLabel = new JLabel("Birthdate (YYYY-MM-DD): ");
+        JTextField birthdateField = new JTextField(20);
 
         // Add Login button
         JButton loginButton = new JButton("Login");
 
         // Add components to login panel
-        loginPanel.add(usernameLabel);
-        loginPanel.add(usernameField);
-        loginPanel.add(passwordLabel);
-        loginPanel.add(passwordField);
+        loginPanel.add(employeeIDLabel);
+        loginPanel.add(employeeIDField);
+        loginPanel.add(birthdateLabel);
+        loginPanel.add(birthdateField);
         loginPanel.add(new JLabel());  // Empty label for spacing
         loginPanel.add(loginButton);
 

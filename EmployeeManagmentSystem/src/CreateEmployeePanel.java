@@ -1,5 +1,5 @@
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.*;
 
 public class CreateEmployeePanel {
     private JPanel mainPanel;
@@ -27,9 +27,9 @@ public class CreateEmployeePanel {
         JTextField phoneNumberField = new JTextField(numberHolder);
         SetStyle.setFocusListener(phoneNumberField, numberHolder);
 
-        String positionHolder = "Enter Position";
-        JTextField positionField = new JTextField(positionHolder);
-        SetStyle.setFocusListener(positionField, positionHolder);
+        //String positionHolder = "Enter Position";
+        //JTextField positionField = new JTextField(positionHolder);
+        //SetStyle.setFocusListener(positionField, positionHolder);
         
         //address fields 
         String streetHolder = "Enter Street Address";
@@ -40,9 +40,6 @@ public class CreateEmployeePanel {
         JTextField cityField = new JTextField(cityHolder);
         SetStyle.setFocusListener(cityField, cityHolder);
 
-        String stateHolder = "Enter State";
-        JTextField stateField = new JTextField(stateHolder);
-        SetStyle.setFocusListener(stateField, stateHolder);
 
         String zipHolder = "Enter Zip Code";
         JTextField zipField = new JTextField(zipHolder);
@@ -52,12 +49,19 @@ public class CreateEmployeePanel {
         JComboBox<String> dayCombo = new JComboBox<>();
         JComboBox<String> monthCombo = new JComboBox<>();
         JComboBox<String> yearCombo = new JComboBox<>();
+        JComboBox<String> roleCombo = new JComboBox<>();
         JComboBox<String> genderCombo = new JComboBox<>();
+        JComboBox<String> stateCombo = new JComboBox<>();
         //date of hire fields
         JComboBox<String> empDayCombo = new JComboBox<>();
         JComboBox<String> empMonthCombo = new JComboBox<>();
         JComboBox<String> empYearCombo = new JComboBox<>();
 
+        roleCombo.addItem("-role-");
+        String[] roles ={"Admin", "Manager", "Employee"};
+        for (String role : roles){
+            roleCombo.addItem(role);
+        }
         //adding a label on the drop down menu to explain to user what to select
         genderCombo.addItem("-gender-");
         //options for gender in drop down menu
@@ -65,6 +69,14 @@ public class CreateEmployeePanel {
         for(String gender : genders){
             genderCombo.addItem(gender);
         }
+
+        stateCombo.addItem("-state-");
+        String[] states = {"AL", "AK", "AZ", "AR", "AS", "CA", "CO", "CT", "DE", "DC", "FL","GA","GU","HI"
+    ,"ID", "IL","IN","IA", "KS","KY","LA","ME","MD","MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ","NM","NY","NC"
+    ,"ND", "OH","OK","OR","PA","PR","RI","SC","SD","TN","TX","UT","VT","VI","VA","WA","WV","WI","WY"};
+    for(String state : states){
+        stateCombo.addItem(state);
+    }
 
         //adding a label on the drop down menu to explain to user what to select
         dayCombo.addItem("-day-");
@@ -112,10 +124,10 @@ public class CreateEmployeePanel {
         createEmployeePanel.add(numberLabel);
         createEmployeePanel.add(phoneNumberField);
 
-        JLabel positionLabel = new JLabel("Position: ");
-        SetStyle.setInstructionText(positionLabel);
-        createEmployeePanel.add(positionLabel);
-        createEmployeePanel.add(positionField);
+        JLabel roleLabel = new JLabel("Role: ");
+        SetStyle.setInstructionText(roleLabel);
+        createEmployeePanel.add(roleLabel);
+        createEmployeePanel.add(roleCombo);
 
         JLabel streetLabel = new JLabel("Street Address: ");
         SetStyle.setInstructionText(streetLabel);
@@ -127,10 +139,10 @@ public class CreateEmployeePanel {
         createEmployeePanel.add(cityLabel);
         createEmployeePanel.add(cityField);
 
-        JLabel stateLabel = new JLabel("State: ");
+        JLabel stateLabel = new JLabel("State/Territory: ");
         SetStyle.setInstructionText(stateLabel);
         createEmployeePanel.add(stateLabel);
-        createEmployeePanel.add(stateField);
+        createEmployeePanel.add(stateCombo);
 
         JLabel zipLabel = new JLabel("Zip Code: ");
         SetStyle.setInstructionText(zipLabel);
@@ -176,10 +188,10 @@ public class CreateEmployeePanel {
             String name = nameField.getText();
             String email = emailField.getText();
             String phoneNumber = phoneNumberField.getText();
-            String position = positionField.getText();
+            String role = (String) roleCombo.getSelectedItem();
             String street = streetField.getText();
             String city = cityField.getText();
-            String state = stateField.getText();
+            String state = (String)stateCombo.getSelectedItem();
             String zip = zipField.getText();
             String day = (String) dayCombo.getSelectedItem();
             String month = (String) monthCombo.getSelectedItem();
@@ -190,7 +202,7 @@ public class CreateEmployeePanel {
             String empYear = (String) empYearCombo.getSelectedItem();
 
             //calling constructor to create a new employee in Employee class
-            Employee newEmployee = new Employee(name, email, phoneNumber, position, street, city, state, zip, day, month, year, gender, empDay, empMonth, empYear);
+            Employee newEmployee = new Employee(name, email, phoneNumber, role, street, city, state, zip, day, month, year, gender, empDay, empMonth, empYear);
             //adding employee to the system
             employeeManagementSystem.addEmployee(newEmployee);
             //success message displayed to user
