@@ -44,10 +44,9 @@ public class EmployeeManagementSystem{
         } catch (IOException e){ //exception handling incase for some reason this info cannot be appended to the file
             System.out.println("Unable to write to file.");
         }
-        
-        
     }
-    private void saveEmployees(List<Employee> employees) {
+
+    public void saveEmployees(List<Employee> employees) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH))) {
             for (Employee employee : employees) {
                 // Write employee info
@@ -95,6 +94,39 @@ public class EmployeeManagementSystem{
 
                 writer.write(eval.getName() + ", " + eval.getTitle() + ", " + eval.getEvalDay() + ", " + eval.getEvalMonth() + ", " + eval.getEvalYear() + ", " + eval.getEvalQuestion1() + ", " + eval.getEvalQuestion2() + ", " + eval.getEvalQuestion3());
             } 
+        } catch (IOException e){
+            System.out.println("Unable to write to file.");
+        }
+    }
+
+    public void addJobHistory(JobHistory jobHistory){
+        try{
+            boolean headerExists = false;
+            List<String> fileContent = new ArrayList<>();
+
+            try(BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))){
+                String line;
+                while((line = reader.readLine()) != null){
+                    fileContent.add(line);
+                    if(line.trim().equals("# Job History")){
+                        headerExists = true;
+                    }
+                }
+            }
+
+            try(BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH))){
+                for(String line : fileContent){
+                    writer.write(line);
+                    writer.newLine();
+                }
+
+                if(!headerExists){
+                    writer.write("# Job History");
+                    writer.newLine();
+                }
+
+                writer.write(jobHistory.getEmployeeName() + ", " + jobHistory.getJobTitle() + ", " + jobHistory.getCompanyName() + ", " + jobHistory.getStartDate() + ", " + jobHistory.getEndDate() + ", " + jobHistory.getJobDescription() + ", " + jobHistory.getDepartment() + ", " + jobHistory.getPosition());
+            }
         } catch (IOException e){
             System.out.println("Unable to write to file.");
         }
@@ -224,7 +256,6 @@ public class EmployeeManagementSystem{
 
                 if(line.equals("# Sprint Evaluations")){
                     sprintEvalSectionFound = true;
-                    //continue; may need this? idk
                 }
 
                 if (sprintEvalSectionFound){
@@ -238,6 +269,7 @@ public class EmployeeManagementSystem{
         }
         return employeeEvals;
     }
+
     public int getTotalSprintEvaluations() {
         int sprintEvalCount = 0;
         boolean sprintEvalSectionFound = false;
@@ -259,5 +291,30 @@ public class EmployeeManagementSystem{
             System.out.println("Unable to read from file.");
         }
         return sprintEvalCount;
+    }
+
+    public List<String> getJobHistories(Employee employee){
+        List<String> employeeJobHistories = new ArrayList<>();
+        try(BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))){
+            String line;
+            boolean jobHistorySectionFound = false;
+
+            while((line = reader.readLine()) != null){
+                line = line.trim();
+
+                if(line.equals("# Job History")){
+                    jobHistorySectionFound = true;
+                }
+
+                if(jobHistorySectionFound){
+                    if(line.startsWith(employee.getFullName().trim())){
+                        employeeJobHistories.add(line);
+                    }
+                }
+            }
+        } catch(IOException e){
+            System.out.println("Unable to read from file.");
+        }
+        return employeeJobHistories;
     }
 }

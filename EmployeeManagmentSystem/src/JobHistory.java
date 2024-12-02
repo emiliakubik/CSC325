@@ -1,6 +1,7 @@
 
 public class JobHistory {
     
+    private String employeeName;
     private String jobTitle;
     private String companyName;
     private String startDate;
@@ -15,7 +16,8 @@ public class JobHistory {
     private Employee associatedEmployee;
 
     //job details constructor
-    public JobHistory(String jobTitle, String companyName, String startDate, String endDate, String jobDescription, String department, String position){
+    public JobHistory(String employeeName, String jobTitle, String companyName, String startDate, String endDate, String jobDescription, String department, String position){
+        this.employeeName = employeeName;
         this.jobTitle = jobTitle;
         this.companyName = companyName;
         this.startDate = startDate;
@@ -31,7 +33,9 @@ public class JobHistory {
     this.pastJobTitle = pastJobTitle;
     this.reasonForLeaving = reasonForLeaving;
     }
+
     //creating my getters and setters for each input field
+    public String getEmployeeName() {return employeeName;}
     public String getJobTitle() {return jobTitle;}
     public void setJobTitle(String jobTitle){this.jobTitle = jobTitle;}
     public String getCompanyName() {return companyName;}
