@@ -31,11 +31,20 @@ public class JobHistoryPanel {
         jobHistoryPanel.add(employeeDropdown);
 
         // Text fields for job details
-        JTextField jobTitleField = new JTextField();
-        JTextField companyNameField = new JTextField();
-        JTextField startDateField = new JTextField("YYYY-MM-DD");
-        JTextField endDateField = new JTextField("YYYY-MM-DD");
+        String titleInstruction = "Enter Job Title";
+        JTextField jobTitleField = new JTextField(titleInstruction);
+        SetStyle.setFocusListener(jobTitleField, titleInstruction);
+        String nameInstruction = "Enter Company Name";
+        JTextField companyNameField = new JTextField(nameInstruction);
+        SetStyle.setFocusListener(companyNameField, nameInstruction);
+        String dateInstruction = "YYYY-MM-DD";
+        JTextField startDateField = new JTextField(dateInstruction);
+        SetStyle.setFocusListener(startDateField, dateInstruction);
+        JTextField endDateField = new JTextField(dateInstruction);
+        SetStyle.setFocusListener(endDateField, dateInstruction);
+        String descInstruction = "Enter Job Description";
         JTextField jobDescriptionField = new JTextField();
+        SetStyle.setFocusListener(jobDescriptionField, descInstruction);
         JTextField pastJobTitleField = new JTextField();
         JTextField pastJobDurationField = new JTextField();
         JTextField reasonForLeavingField = new JTextField();
@@ -137,14 +146,14 @@ public class JobHistoryPanel {
                 }
         
                 employeeManagementSystem.addJobHistory(jobHistory);
-                JOptionPane.showMessageDialog(mainPanel, "Job History Saved:\n" + jobHistory.toString());
+                JOptionPane.showMessageDialog(mainPanel, "Job History Saved:\n");
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(mainPanel, "Error Saving: " + ex.getMessage());
             }
         });
     }
 
-    public JPanel showViewJobHistory(Employee employee){
+    public void showViewJobHistory(Employee employee){
         JPanel viewJobHistoryPanel = new JPanel(new BorderLayout());
         JLabel titleLabel = new JLabel(employee.getFullName() + " Job History", JLabel.CENTER);
         viewJobHistoryPanel.add(titleLabel, BorderLayout.NORTH);
@@ -160,7 +169,7 @@ public class JobHistoryPanel {
                 String historyLine = jobHistories.get(i);
                 String[] historyParts = historyLine.split(",");
 
-                if(historyParts.length >= 5){
+                if(historyParts.length >= 7){
                     data[i][0] = historyParts[1].trim();
                     data[i][1] = historyParts[2].trim();
                     data[i][2] = historyParts[3].trim();
@@ -171,21 +180,27 @@ public class JobHistoryPanel {
             JTable table = new JTable(data, columnNames);
             JScrollPane scrollPane = new JScrollPane(table);
             viewJobHistoryPanel.add(scrollPane, BorderLayout.CENTER);
+            mainPanel.add(viewJobHistoryPanel, "View Job History");
+            cardLayout.show(mainPanel, "View Job History");
 
-            // table.addMouseListener(new MouseAdapter() {
-            //     @Override
-            //     public void mouseClicked(MouseEvent e){
-            //         int row = table.rowAtPoint(e.getPoint());
-            //         int col = table.columnAtPoint(e.getPoint());
+            table.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e){
+                    int row = table.rowAtPoint(e.getPoint());
+                    int col = table.columnAtPoint(e.getPoint());
 
-            //         if (col == 0){
-            //             String title = (String) table.getValueAt(row, 0);
-            //             viewSpecificJobHistory(title, jobHistories);
-            //         }
-            //     }
-            // });
+                    if (col == 0){
+                        String title = (String) table.getValueAt(row, 0);
+                        viewSpecificJobHistory(title, jobHistories);
+                    }
+                }
+            });
         }
-        return viewJobHistoryPanel;
+        //return viewJobHistoryPanel;
+    }
+
+    public void viewSpecificJobHistory(String title, List<String> jobHistories){
+        System.out.println("Reached specific job history");
     }
 
     //this is what adds the fields I created to the panel
