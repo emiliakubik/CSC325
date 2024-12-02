@@ -6,14 +6,21 @@ public class CreateEmployeePanel {
     private CardLayout cardLayout;
     private EmployeeManagementSystem employeeManagementSystem;
 
-    public CreateEmployeePanel(JPanel mainPanel, CardLayout cardLayout, EmployeeManagementSystem employeeManagementSystem){
+    public CreateEmployeePanel(JPanel mainPanel, CardLayout cardLayout,
+            EmployeeManagementSystem employeeManagementSystem) {
         this.mainPanel = mainPanel;
         this.cardLayout = cardLayout;
         this.employeeManagementSystem = employeeManagementSystem;
     }
 
+    // Helper method to validate email
+    private boolean isValidEmail(String email) {
+        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+        return email.matches(emailRegex);
+    }
+
     public void showCreateEmployeePanel() {
-        //components for the "Create Employee" panel
+        // components for the "Create Employee" panel
         JButton createButton = new JButton("Create Employee");
         String nameHolder = "Enter Name";
         JTextField nameField = new JTextField(nameHolder);
@@ -27,11 +34,11 @@ public class CreateEmployeePanel {
         JTextField phoneNumberField = new JTextField(numberHolder);
         SetStyle.setFocusListener(phoneNumberField, numberHolder);
 
-        //String positionHolder = "Enter Position";
-        //JTextField positionField = new JTextField(positionHolder);
-        //SetStyle.setFocusListener(positionField, positionHolder);
-        
-        //address fields 
+        // String positionHolder = "Enter Position";
+        // JTextField positionField = new JTextField(positionHolder);
+        // SetStyle.setFocusListener(positionField, positionHolder);
+
+        // address fields
         String streetHolder = "Enter Street Address";
         JTextField streetField = new JTextField(streetHolder);
         SetStyle.setFocusListener(streetField, streetHolder);
@@ -40,75 +47,75 @@ public class CreateEmployeePanel {
         JTextField cityField = new JTextField(cityHolder);
         SetStyle.setFocusListener(cityField, cityHolder);
 
-
         String zipHolder = "Enter Zip Code";
         JTextField zipField = new JTextField(zipHolder);
         SetStyle.setFocusListener(zipField, zipHolder);
 
-        //date of birth and gender fields
+        // date of birth and gender fields
         JComboBox<String> dayCombo = new JComboBox<>();
         JComboBox<String> monthCombo = new JComboBox<>();
         JComboBox<String> yearCombo = new JComboBox<>();
         JComboBox<String> roleCombo = new JComboBox<>();
         JComboBox<String> genderCombo = new JComboBox<>();
         JComboBox<String> stateCombo = new JComboBox<>();
-        //date of hire fields
+        // date of hire fields
         JComboBox<String> empDayCombo = new JComboBox<>();
         JComboBox<String> empMonthCombo = new JComboBox<>();
         JComboBox<String> empYearCombo = new JComboBox<>();
 
         roleCombo.addItem("-role-");
-        String[] roles ={"Admin", "Manager", "Employee"};
-        for (String role : roles){
+        String[] roles = { "Admin", "Manager", "Employee" };
+        for (String role : roles) {
             roleCombo.addItem(role);
         }
-        //adding a label on the drop down menu to explain to user what to select
+        // adding a label on the drop down menu to explain to user what to select
         genderCombo.addItem("-gender-");
-        //options for gender in drop down menu
-        String[] genders = {"Female", "Male"};
-        for(String gender : genders){
+        // options for gender in drop down menu
+        String[] genders = { "Female", "Male" };
+        for (String gender : genders) {
             genderCombo.addItem(gender);
         }
 
         stateCombo.addItem("-state-");
-        String[] states = {"AL", "AK", "AZ", "AR", "AS", "CA", "CO", "CT", "DE", "DC", "FL","GA","GU","HI"
-    ,"ID", "IL","IN","IA", "KS","KY","LA","ME","MD","MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ","NM","NY","NC"
-    ,"ND", "OH","OK","OR","PA","PR","RI","SC","SD","TN","TX","UT","VT","VI","VA","WA","WV","WI","WY"};
-    for(String state : states){
-        stateCombo.addItem(state);
-    }
+        String[] states = { "AL", "AK", "AZ", "AR", "AS", "CA", "CO", "CT", "DE", "DC", "FL", "GA", "GU", "HI", "ID",
+                "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH",
+                "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "PR", "RI", "SC", "SD", "TN", "TX", "UT", "VT",
+                "VI", "VA", "WA", "WV", "WI", "WY" };
+        for (String state : states) {
+            stateCombo.addItem(state);
+        }
 
-        //adding a label on the drop down menu to explain to user what to select
+        // adding a label on the drop down menu to explain to user what to select
         dayCombo.addItem("-day-");
         empDayCombo.addItem("-day-");
-        //all the options for day in drop down menu- for both dob and hire date
-        for(int i = 1; i <= 31; i++){
+        // all the options for day in drop down menu- for both dob and hire date
+        for (int i = 1; i <= 31; i++) {
             dayCombo.addItem(String.valueOf(i));
             empDayCombo.addItem(String.valueOf(i));
         }
 
-        //adding a label on the drop down menu to explain to user what to select
+        // adding a label on the drop down menu to explain to user what to select
         monthCombo.addItem("-month-");
         empMonthCombo.addItem("-month-");
-        //all the options for month in drop down menu- for both dob and hire date
-        for (int i = 1; i <= 12; i++){
+        // all the options for month in drop down menu- for both dob and hire date
+        for (int i = 1; i <= 12; i++) {
             monthCombo.addItem(String.valueOf(i));
             empMonthCombo.addItem(String.valueOf(i));
         }
 
-        //adding a label on the drop down menu to explain to user what to select
+        // adding a label on the drop down menu to explain to user what to select
         yearCombo.addItem("-year-");
         empYearCombo.addItem("-year-");
-        //all the options for year in drop down menu- for both dob and hire date
-        for(int i = 1950; i <= 2024; i++){
+        // all the options for year in drop down menu- for both dob and hire date
+        for (int i = 1950; i <= 2024; i++) {
             yearCombo.addItem(String.valueOf(i));
             empYearCombo.addItem(String.valueOf(i));
         }
 
-        //panel for creating an employee and setting the panels layout
+        // panel for creating an employee and setting the panels layout
         JPanel createEmployeePanel = new JPanel(new GridLayout(12, 2));
 
-        //adding components to panel
+        // adding components to panel
         JLabel nameLabel = new JLabel("Name: ");
         SetStyle.setInstructionText(nameLabel);
         createEmployeePanel.add(nameLabel);
@@ -118,7 +125,7 @@ public class CreateEmployeePanel {
         SetStyle.setInstructionText(emailLabel);
         createEmployeePanel.add(emailLabel);
         createEmployeePanel.add(emailField);
-        
+
         JLabel numberLabel = new JLabel("Phone Number: ");
         SetStyle.setInstructionText(numberLabel);
         createEmployeePanel.add(numberLabel);
@@ -177,13 +184,14 @@ public class CreateEmployeePanel {
         createEmployeePanel.add(createButton);
         SetStyle.setBackground(createEmployeePanel);
 
-        //add panel to the mainPanel with name "Create Employee"
+        // add panel to the mainPanel with name "Create Employee"
         mainPanel.add(createEmployeePanel, "Create Employee");
 
-        //show "Create Employee" panel using cardLayout
+        // show "Create Employee" panel using cardLayout
         cardLayout.show(mainPanel, "Create Employee");
 
-        //action listener so that once create button is clicked, input in each box will be taken and put in constructor to create a new object in employee class
+        // action listener so that once create button is clicked, input in each box will
+        // be taken and put in constructor to create a new object in employee class
         createButton.addActionListener(e -> {
             String name = nameField.getText();
             String email = emailField.getText();
@@ -191,7 +199,7 @@ public class CreateEmployeePanel {
             String role = (String) roleCombo.getSelectedItem();
             String street = streetField.getText();
             String city = cityField.getText();
-            String state = (String)stateCombo.getSelectedItem();
+            String state = (String) stateCombo.getSelectedItem();
             String zip = zipField.getText();
             String day = (String) dayCombo.getSelectedItem();
             String month = (String) monthCombo.getSelectedItem();
@@ -201,11 +209,42 @@ public class CreateEmployeePanel {
             String empMonth = (String) empMonthCombo.getSelectedItem();
             String empYear = (String) empYearCombo.getSelectedItem();
 
-            //calling constructor to create a new employee in Employee class
-            Employee newEmployee = new Employee(name, email, phoneNumber, role, street, city, state, zip, day, month, year, gender, empDay, empMonth, empYear);
-            //adding employee to the system
+            // Validation logic
+            if (name.isBlank() || name.equals("Enter Name") ||
+                    email.isBlank() || email.equals("Enter Email") ||
+                    phoneNumber.isBlank() || phoneNumber.equals("Enter Phone Number") ||
+                    role == null || role.equals("-role-") ||
+                    street.isBlank() || street.equals("Enter Street Address") ||
+                    city.isBlank() || city.equals("Enter City") ||
+                    state == null || state.equals("-state-") ||
+                    zip.isBlank() || zip.equals("Enter Zip Code") ||
+                    day == null || day.equals("-day-") ||
+                    month == null || month.equals("-month-") ||
+                    year == null || year.equals("-year-") ||
+                    gender == null || gender.equals("-gender-") ||
+                    empDay == null || empDay.equals("-day-") ||
+                    empMonth == null || empMonth.equals("-month-") ||
+                    empYear == null || empYear.equals("-year-")) {
+
+                // Display warning if any field is not properly filled
+                JOptionPane.showMessageDialog(mainPanel, "Please fill in all fields.", "Input Error",
+                        JOptionPane.WARNING_MESSAGE);
+                return; // Exit the action listener without creating an employee
+            }
+
+            // Validate email format
+            if (!isValidEmail(email)) {
+                JOptionPane.showMessageDialog(mainPanel, "Invalid email address. Please enter a valid email.",
+                        "Input Error", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            // Proceed to create the employee if all fields are valid
+            Employee newEmployee = new Employee(name, email, phoneNumber, role, street, city, state, zip, day, month,
+                    year, gender, empDay, empMonth, empYear);
             employeeManagementSystem.addEmployee(newEmployee);
-            //success message displayed to user
+
+            // Success message
             JOptionPane.showMessageDialog(mainPanel, name + " added successfully.");
         });
     }
