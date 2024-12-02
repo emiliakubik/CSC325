@@ -1,6 +1,6 @@
 import java.awt.*;
-import java.util.List;
 import javax.swing.*;
+import java.util.List;
 
 public class DashboardPanel {
 
@@ -15,47 +15,105 @@ public class DashboardPanel {
     }
 
     public void showDashboard() {
+        // Create the main dashboard panel with BorderLayout
         JPanel dashboardPanel = new JPanel(new BorderLayout());
 
-        addDefaultHeader(dashboardPanel);
-        JPanel keyIndicatorsPanel = createKeyIndicatorsPanel();
-        dashboardPanel.add(keyIndicatorsPanel, BorderLayout.CENTER);
+        // Add header
+        JPanel headerPanel = new JPanel();
+        JLabel headerLabel = new JLabel("Welcome to WorkWatch", JLabel.CENTER);
+        headerLabel.setFont(new Font("Verdana", Font.PLAIN, 30)); // Set font size and style
+        headerLabel.setForeground(new Color(245, 245, 220));
+        headerPanel.setBackground(new Color(20, 60, 20)); // Set header background color
+        headerPanel.add(headerLabel);
 
-        //This is what adds the search bar to the dashboard
+        // Add header to the top section
+        dashboardPanel.add(headerPanel, BorderLayout.NORTH);
+
+        // Top section: Search Bar + Key Indicators
+        JPanel topSectionPanel = new JPanel(new BorderLayout());
+
+        // Add Search Bar on the left
         SearchBar searchBar = new SearchBar(mainPanel, cardLayout, employeeManagementSystem);
         JPanel searchBarPanel = searchBar.createSearchPanel();
-        dashboardPanel.add(searchBarPanel, BorderLayout.SOUTH);
+
+        // Add a border around the search bar panel
+        searchBarPanel.setBorder(BorderFactory.createLineBorder(new Color(20, 60, 20), 2)); // Set border color and wdith
+        topSectionPanel.add(searchBarPanel, BorderLayout.WEST);
+
+        // Add Key Indicators on the right
+        JPanel keyIndicatorsPanel = createKeyIndicatorsPanel();
+        topSectionPanel.add(keyIndicatorsPanel, BorderLayout.CENTER);
+
+        // Add the top section to the dashboard
+        dashboardPanel.add(topSectionPanel, BorderLayout.CENTER);
+
+        // Add Graphs Placeholder panels
+        JPanel graphsPanel = new JPanel(new GridLayout(1, 2, 10, 10));
+
+        // Create first Graph Panel
+        JPanel graphPanel1 = createGraphPlaceholderPanel("Performance Graph 1");
+        graphsPanel.add(graphPanel1);
+
+        // Create second Graph Panel
+        JPanel graphPanel2 = createGraphPlaceholderPanel("Performance Graph 2");
+        graphsPanel.add(graphPanel2);
+
+        dashboardPanel.add(graphsPanel, BorderLayout.SOUTH);
+
+        // Add the dashboard to the main panel
         mainPanel.add(dashboardPanel, "Dashboard");
         cardLayout.show(mainPanel, "Dashboard");
-    }
 
-    // Utility method to add the default header
-    private void addDefaultHeader(JPanel panel) {
-        JLabel headerLabel = new JLabel("Welcome to the Employee Management System", JLabel.CENTER);
-        headerLabel.setFont(new Font("Arial", Font.BOLD, 18));
-        headerLabel.setOpaque(true);
-        headerLabel.setBackground(new Color(0, 102, 204));
-        headerLabel.setForeground(Color.WHITE);
-        panel.add(headerLabel, BorderLayout.NORTH);
+        // Ensure layout is updated
+        mainPanel.revalidate();
+        mainPanel.repaint();
     }
 
     private JPanel createKeyIndicatorsPanel() {
         JPanel keyIndicatorsPanel = new JPanel(new GridLayout(2, 1, 10, 10));
-        keyIndicatorsPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+
+        // Set background color
+        keyIndicatorsPanel.setBackground(Color.decode("#F2F2F2"));
+
+        // Set the border color
+        keyIndicatorsPanel.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createLineBorder(new Color(20, 60, 20), 2),
+                "Key Indicators" // Title text
+        ));
+
         List<Employee> employees = employeeManagementSystem.getEmployees();
-        //these get the number of employees and sprint evaluations from the textfile
+
+        // Fetch data
         int numberOfEmployees = employees != null ? employees.size() : 0;
         int numberOfSprintEvaluations = employeeManagementSystem.getTotalSprintEvaluations();
 
-
+        // Create Labels
         JLabel totalEmployeesLabel = new JLabel("Total Employees: " + numberOfEmployees, JLabel.CENTER);
-        totalEmployeesLabel.setFont(new Font("Arial", Font.PLAIN, 16));
-        JLabel sprintEvaluationsLabel = new JLabel("Total Sprint Evaluations: " + numberOfSprintEvaluations, JLabel.CENTER);
-        sprintEvaluationsLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+        JLabel sprintEvaluationsLabel = new JLabel("Total Sprint Evaluations: " + numberOfSprintEvaluations,
+                JLabel.CENTER);
 
         keyIndicatorsPanel.add(totalEmployeesLabel);
         keyIndicatorsPanel.add(sprintEvaluationsLabel);
 
         return keyIndicatorsPanel;
+    }
+
+    private JPanel createGraphPlaceholderPanel(String title) {
+        JPanel graphPanel = new JPanel(new BorderLayout());
+        graphPanel.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createLineBorder(new Color(20, 60, 20), 2), // Set the border color
+                "Performance Graph" // Title text
+        ));
+
+        JLabel placeholder = new JLabel("Graph will appear here", JLabel.CENTER);
+        placeholder.setOpaque(true);
+        placeholder.setBackground(Color.decode("#F2F2F2"));
+        placeholder.setForeground(Color.DARK_GRAY);
+        graphPanel.add(placeholder, BorderLayout.CENTER);
+
+        // Set a preferred size
+        graphPanel.setPreferredSize(new Dimension(400, 300));
+
+        return graphPanel;
     }
 }
