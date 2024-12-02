@@ -148,6 +148,9 @@ public class ViewAndEditEmployee {
 
         JButton saveButton = new JButton("Save Changes");
         editEmployeePanel.add(saveButton);
+        JButton jobHistoryButton = new JButton("View Job History");
+        editEmployeePanel.add(jobHistoryButton);
+
         SetStyle.setBackground(editEmployeePanel);
 
         //add panel to the mainPanel with name "Edit Employee"
@@ -179,6 +182,11 @@ public class ViewAndEditEmployee {
 
             //Return to the View Employees panel after changes save
             cardLayout.show(mainPanel, "View Employees");
+        });
+
+        jobHistoryButton.addActionListener(e -> {
+            JobHistoryPanel history = new JobHistoryPanel(mainPanel, cardLayout, employeeManagementSystem);
+            history.showViewJobHistory(employee);
         });
     }
 

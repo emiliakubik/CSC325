@@ -1,10 +1,7 @@
-H467, emilia kubik, ekubik1@murraystate.edu, 2246229879, manager, franklin college, murray, ky, 60010, 17, 4, 2005, Female, 29, 9, 2023
-S921, name, , , , , , , , 2, 4, 1951, Female, 2, 3, 1953
-N276, Enter Name, Enter Email, Enter Phone Number, Enter Position, Enter Street Address, Enter City, Enter State, Enter Zip Code, -day-, -month-, -year-, -gender-, -day-, -month-, -year-
-E658, Enter Name, Enter Email, Enter Phone Number, Enter Position, Enter Street Address, Enter City, Enter State, Enter Zip Code, -day-, -month-, -year-, -gender-, -day-, -month-, -year-
+
+T819, Emilia Kubik, ekubik1@murraystate.edu, 2246229879, Employee, Business Building, Murray, IL, 60010, 17, 4, 2005, Female, 16, 10, 2022
+M730, Michael, michael123@gmail.com, 1234567890, Manager, 123 Rainbow Road, Houston, TX, 12345, 4, 3, 1962, Male, 16, 9, 2022
 # Sprint Evaluations
-emilia kubik, title, 4, 4, 2022, answer 1, answer 2, answer 3
-emilia kubik, , -day-, -month-, -year-, Enter response here, Enter response here, Enter response here
-
-
-S285,  Trinity,  tnoble3@murraystat.edu,  7723325175,  Employee,  1700 Lowes Dr,  Murray,  KY,  42071, 4, 6, 2005, Female, 5, 4, 2023
+Emilia Kubik, Eval 1, 4, 10, 2024, question 1 answer, question 2 answer, question 3 answer
+# Job History
+ Emilia Kubik, manager, Apple, 2020-04-17, 2022-08-22, manage, Finance, Financial Analyst

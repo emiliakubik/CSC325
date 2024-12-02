@@ -1,8 +1,11 @@
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseAdapter;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.*;
+import java.util.List;
 
 public class JobHistoryPanel {
     private JPanel mainPanel;
@@ -130,15 +133,60 @@ public class JobHistoryPanel {
                     jobHistory = new JobHistory(jobTitle, companyName, startDate, endDate, jobDescription, department, position,
                                                 pastJobTitle, pastJobDuration, reasonForLeaving);
                 } else {
-                    jobHistory = new JobHistory(jobTitle, companyName, startDate, endDate, jobDescription, department, position);
+                    jobHistory = new JobHistory(selectedEmployeeName, jobTitle, companyName, startDate, endDate, jobDescription, department, position);
                 }
         
-                attachJobHistoryToEmployee(selectedEmployee, jobHistory);
+                employeeManagementSystem.addJobHistory(jobHistory);
                 JOptionPane.showMessageDialog(mainPanel, "Job History Saved:\n" + jobHistory.toString());
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(mainPanel, "Error Saving: " + ex.getMessage());
             }
         });
+    }
+
+    public JPanel showViewJobHistory(Employee employee){
+        JPanel viewJobHistoryPanel = new JPanel(new BorderLayout());
+        JLabel titleLabel = new JLabel(employee.getFullName() + " Job History", JLabel.CENTER);
+        viewJobHistoryPanel.add(titleLabel, BorderLayout.NORTH);
+
+        List<String> jobHistories = employeeManagementSystem.getJobHistories(employee);
+        if(jobHistories.isEmpty()){
+            viewJobHistoryPanel.add(new JLabel("No job history available."), BorderLayout.CENTER);
+        } else {
+            String[] columnNames = {"Job Title", "Company", "Start Date", "End Date"};
+            String[][] data = new String[jobHistories.size()][4];
+
+            for(int i = 0; i < jobHistories.size(); i++){
+                String historyLine = jobHistories.get(i);
+                String[] historyParts = historyLine.split(",");
+
+                if(historyParts.length >= 5){
+                    data[i][0] = historyParts[1].trim();
+                    data[i][1] = historyParts[2].trim();
+                    data[i][2] = historyParts[3].trim();
+                    data[i][3] = historyParts[4].trim();
+                }
+            }
+
+            JTable table = new JTable(data, columnNames);
+            JScrollPane scrollPane = new JScrollPane(table);
+            viewJobHistoryPanel.add(scrollPane, BorderLayout.CENTER);
+
+            // table.addMouseListener(new MouseAdapter() {
+            //     @Override
+            //     public void mouseClicked(MouseEvent e){
+            //         int row = table.rowAtPoint(e.getPoint());
+            //         int col = table.columnAtPoint(e.getPoint());
+
+            //         if (col == 0){
+            //             String title = (String) table.getValueAt(row, 0);
+            //             viewSpecificJobHistory(title, jobHistories);
+            //         }
+            //     }
+            // });
+        }
+        return viewJobHistoryPanel;
+    }
 
     //this is what adds the fields I created to the panel
     private void addFields(JPanel panel, String[] labels, JComponent[] fields) {
@@ -148,11 +196,11 @@ public class JobHistoryPanel {
         }
     }
     public void addJobHistoryToEmployee(String employeeID, JobHistory jobHistory) {
-        List<Employee> employees = getEmployees(); 
+        List<Employee> employees = employeeManagementSystem.getEmployees(); 
         for (Employee employee : employees) {
             if (employee.getEmployeeID().equals(employeeID)) {
                 employee.addJobHistory(jobHistory);
-                saveEmployees(employees); 
+                employeeManagementSystem.saveEmployees(employees); 
                 System.out.println("Job history added successfully.");
                 return;
             }
@@ -161,7 +209,7 @@ public class JobHistoryPanel {
     }
 
     private void populateEmployeeDropdown(JComboBox<String> employeeDropdown) {
-        for (Employee employee : employeeManagementSystem.getAllEmployees()) {
+        for (Employee employee : employeeManagementSystem.getEmployees()) {
             employeeDropdown.addItem(employee.getFullName());
         }
     }
