@@ -15,7 +15,7 @@ public class StartupScreen {
         frame.setSize(350, 450);
 
         // Load the logo image
-        ImageIcon logoIcon = new ImageIcon("EmployeeManagmentSystem/src/images/HR_APP_logo.png");
+        ImageIcon logoIcon = new ImageIcon("CSC325\\EmployeeManagmentSystem\\src\\images\\HR_APP_logo.png");
         Image logoImage = logoIcon.getImage();
 
         // Set the taskbar icon
