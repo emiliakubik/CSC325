@@ -19,12 +19,12 @@ public class Login {
         frame.setResizable(false);
 
         // Load the logo
-        ImageIcon customIcon = new ImageIcon("EmployeeManagmentSystem/src/images/HR_APP_logo.png");
+        ImageIcon customIcon = new ImageIcon("CSC325\\EmployeeManagmentSystem\\src\\images\\HR_APP_logo.png");
         frame.setIconImage(customIcon.getImage());
 
         // Create a panel for the login form
         JPanel loginPanel = new JPanel();
-        loginPanel.setLayout(new GridLayout(3, 2)); // No additional spacing between components
+        loginPanel.setLayout(new GridLayout(3, 2));
 
         // Add employee ID field
         JLabel employeeIDLabel = new JLabel("Employee ID: ");
@@ -41,7 +41,7 @@ public class Login {
         birthdateField.setCaretColor(Color.BLACK); // Cursor color
 
         // Set placeholder color (gray)
-        birthdateField.setForeground(Color.black); // Placeholder text in gray color
+        birthdateField.setForeground(Color.black); // Placeholder text
 
         // Add login button
         JButton loginButton = new JButton("Login");
