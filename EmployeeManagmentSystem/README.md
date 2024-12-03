@@ -2,6 +2,11 @@
 
 Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
 
+CONTRIBUTORS
+Emilia Kubik
+Trinity Noble
+Alana Garcia
+
 ## Folder Structure
 
 The workspace contains two folders by default, where:

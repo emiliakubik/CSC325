@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.JTableHeader;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -67,5 +68,16 @@ public class SetStyle {
                 }
             }
         });
+    }
+
+    public static void setInfoStyle(JLabel questionLabel, JLabel answerLabel){
+        questionLabel.setFont(new Font("Monospaced", Font.BOLD, 12));
+        questionLabel.setForeground(Color.WHITE);
+        questionLabel.setOpaque(true);
+        questionLabel.setBackground(new Color(10, 50, 10));
+        questionLabel.setBorder(new EmptyBorder(10, 10, 10, 10));
+        
+        answerLabel.setFont(new Font("Monospaced", Font.PLAIN, 12));
+        answerLabel.setForeground(Color.DARK_GRAY);
     }
 }

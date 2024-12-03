@@ -196,11 +196,58 @@ public class JobHistoryPanel {
                 }
             });
         }
-        //return viewJobHistoryPanel;
     }
 
     public void viewSpecificJobHistory(String title, List<String> jobHistories){
-        System.out.println("Reached specific job history");
+        JPanel detailPanel = new JPanel(new BorderLayout());
+        JLabel titleLabel = new JLabel(title, JLabel.CENTER);
+        titleLabel.setFont(new Font("Verdana", Font.BOLD, 16));
+        detailPanel.add(titleLabel, BorderLayout.NORTH);
+
+        SetStyle.setBackground(detailPanel);
+
+        String matchedHistory = null;
+        for (String history : jobHistories){
+            String[] historyParts = history.split(",");
+            if (historyParts.length >= 7 && historyParts[1].trim().equals(title)){
+                matchedHistory = history;
+                break;
+            }
+        }
+
+        if (matchedHistory != null){
+            String[] historyParts = matchedHistory.split(",");
+            JPanel infoPanel = new JPanel(new GridLayout(7, 1, 5, 5));
+
+            JLabel jobDescription = new JLabel("Job Description");
+            JLabel jDesc = new JLabel(historyParts[5].trim());
+            SetStyle.setInfoStyle(jobDescription, jDesc);
+            infoPanel.add(jobDescription);
+            infoPanel.add(jDesc);
+            
+            JLabel department = new JLabel("Department");
+            JLabel dep = new JLabel(historyParts[6].trim());
+            SetStyle.setInfoStyle(department, dep);
+            infoPanel.add(department);
+            infoPanel.add(dep);
+
+            JLabel position = new JLabel("Position");
+            JLabel pos = new JLabel(historyParts[7].trim());
+            SetStyle.setInfoStyle(position, pos);
+            infoPanel.add(position);
+            infoPanel.add(pos);
+
+            SetStyle.setBackground(infoPanel);
+
+            detailPanel.add(infoPanel, BorderLayout.CENTER);
+        }
+
+        JFrame frame = new JFrame("Job History Details");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.add(detailPanel);
+        frame.setSize(400, 300); //Adjust size as needed
+        frame.setLocationRelativeTo(null); //Center the frame on screen
+        frame.setVisible(true);
     }
 
     //this is what adds the fields I created to the panel

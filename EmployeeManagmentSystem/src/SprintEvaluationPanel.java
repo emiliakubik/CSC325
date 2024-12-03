@@ -283,24 +283,21 @@ public class SprintEvaluationPanel {
             String[] evalParts = matchedEval.split(",");
             JPanel infoPanel = new JPanel(new GridLayout(7, 1, 5, 5));
 
-            // infoPanel.add(new JLabel("Date: "));
-            // infoPanel.add(new JLabel(evalParts[2].trim() + "/" + evalParts[3].trim() + "/" + evalParts[4].trim()));
-
             JLabel question1label = new JLabel("What have you completed during this sprint?");
             JLabel answer1Label = new JLabel(evalParts[5].trim());
-            setStyle(question1label, answer1Label);
+            SetStyle.setInfoStyle(question1label, answer1Label);
             infoPanel.add(question1label);
             infoPanel.add(answer1Label);
 
             JLabel question2label = new JLabel("Is there anything that was not completed?");
             JLabel answer2Label = new JLabel(evalParts[6].trim());
-            setStyle(question2label, answer2Label);
+            SetStyle.setInfoStyle(question2label, answer2Label);
             infoPanel.add(question2label);
             infoPanel.add(answer2Label);
 
             JLabel question3label = new JLabel("Any extra comments regarding the sprint: ");
             JLabel answer3Label = new JLabel(evalParts[7].trim());
-            setStyle(question3label, answer3Label);
+            SetStyle.setInfoStyle(question3label, answer3Label);
             infoPanel.add(question3label);
             infoPanel.add(answer3Label);
 
@@ -315,16 +312,5 @@ public class SprintEvaluationPanel {
     frame.setSize(400, 300); // Adjust size as needed
     frame.setLocationRelativeTo(null); // Center the frame on screen
     frame.setVisible(true);
-    }
-
-    private void setStyle(JLabel questionLabel, JLabel answerLabel){
-        questionLabel.setFont(new Font("Monospaced", Font.BOLD, 12));
-        questionLabel.setForeground(Color.WHITE);
-        questionLabel.setOpaque(true);
-        questionLabel.setBackground(new Color(10, 50, 10));
-        questionLabel.setBorder(new EmptyBorder(10, 10, 10, 10));
-        
-        answerLabel.setFont(new Font("Monospaced", Font.PLAIN, 12));
-        answerLabel.setForeground(Color.DARK_GRAY);
     }
 }
