@@ -6,8 +6,6 @@ public class EmployeeManagementSystem{
     //this is the txt file that all employee info will be kept on
     private static final String FILE_PATH = "empManagementSystem.txt";
 
-    //public EmployeeManagementSystem(){}- MAY NOT NEED?
-
     //this method gets passed an employee from Employee class, takes this info and writes it into the txt file
     public void addEmployee(Employee employee){
         try{
@@ -66,6 +64,7 @@ public class EmployeeManagementSystem{
         }
     }
 
+    //this method gets passed an evaluation from Sprint Eval class, takes this info and writes it into the txt file
     public void addSprintEval(SprintEvaluation eval){
         try{
             boolean headerExists = false;
@@ -87,6 +86,7 @@ public class EmployeeManagementSystem{
                     writer.newLine();
                 }
 
+                //this is the way the text file is organized for easier reading later on
                 if(!headerExists){
                     writer.write("# Sprint Evaluations");
                     writer.newLine();
@@ -99,6 +99,7 @@ public class EmployeeManagementSystem{
         }
     }
 
+    //this method gets passed a job history from Job History class, takes this info and writes it into the txt file
     public void addJobHistory(JobHistory jobHistory){
         try{
             boolean headerExists = false;
@@ -120,6 +121,7 @@ public class EmployeeManagementSystem{
                     writer.newLine();
                 }
 
+                //this is the way the text file is organized for easier reading later on
                 if(!headerExists){
                     writer.write("# Job History");
                     writer.newLine();
@@ -245,6 +247,7 @@ public class EmployeeManagementSystem{
         return employeeList;
     }
 
+    //looks for "# Sprint Evaluations" section in file and reads from there
     public List<String> getSprintEvals(Employee employee){
         List<String> employeeEvals = new ArrayList<>();
         try(BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))){
@@ -293,6 +296,7 @@ public class EmployeeManagementSystem{
         return sprintEvalCount;
     }
 
+    //looks for "# Job History" section in file and reads from there
     public List<String> getJobHistories(Employee employee){
         List<String> employeeJobHistories = new ArrayList<>();
         try(BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))){

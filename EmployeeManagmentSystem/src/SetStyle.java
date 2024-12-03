@@ -6,12 +6,14 @@ import java.awt.event.FocusEvent;
 import java.awt.*;
 
 public class SetStyle {
+    //For text that describes to the user what they should do
     public static void setInstructionText(JLabel text) {
         text.setFont(new Font("Verdana", Font.PLAIN, 16));
         text.setForeground(new Color(10, 50, 10));
         text.setOpaque(true);
     }
 
+    //For the header of any display table 
     public static void setTableHeaderText(JTableHeader header) {
         header.setFont(new Font("Verdana", Font.PLAIN, 12));
         header.setForeground(new Color(255, 255, 240));
@@ -20,11 +22,13 @@ public class SetStyle {
         header.setBorder(BorderFactory.createLineBorder(new Color(190, 190, 210), 2));
     }
 
+    //For all text boxes, sets the color of what is written inside, to make it disappear when clicked use setFocusListener()
     public static void setPlaceHolder(JTextField text) {
         text.setFont(new Font("Verdana", Font.PLAIN, 12));
         text.setForeground(Color.LIGHT_GRAY);
     }
 
+    //For any buttons (specifically save buttons and the side ones in main display)
     public static void setButton(JButton button) {
         button.setFont(new Font("Verdana", Font.PLAIN, 16));
         button.setForeground(new Color(245, 245, 220));
@@ -42,6 +46,7 @@ public class SetStyle {
         // panel.setBackground(new Color(10, 50, 10));
     }
 
+    //For the entire display table, besides the header, it has its own method above
     public static void setTable(JTable table) {
         table.setFont(new Font("Verdana", Font.PLAIN, 12));
         table.setForeground(new Color(10, 50, 10));
@@ -49,6 +54,7 @@ public class SetStyle {
         table.setBackground(new Color(255, 255, 240));
     }
 
+    //For all text boxes, describes what should be typed in the text box and disappears when clicked on box
     public static void setFocusListener(JTextField field, String holder) {
         SetStyle.setPlaceHolder(field);
         field.addFocusListener(new FocusAdapter() {
@@ -70,6 +76,7 @@ public class SetStyle {
         });
     }
 
+    //This sets the style of the boxes that appear to give specific details on sprint eval/job history
     public static void setInfoStyle(JLabel questionLabel, JLabel answerLabel){
         questionLabel.setFont(new Font("Monospaced", Font.BOLD, 12));
         questionLabel.setForeground(Color.WHITE);

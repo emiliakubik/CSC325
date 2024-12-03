@@ -8,6 +8,7 @@ public class SprintEvaluation {
     private String evalMonth;
     private String evalYear;
 
+    //sprint eval details constructor
     public SprintEvaluation(String name, String title, String response1, String response2, String response3, String day, String month, String year){
         fullName = name;
         evalTitle = title;
@@ -19,6 +20,7 @@ public class SprintEvaluation {
         evalYear = year;
     }
 
+    //Getters and Setters for each input field
     public String getName(){
         return fullName;
     }

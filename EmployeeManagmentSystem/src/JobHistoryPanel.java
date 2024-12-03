@@ -5,6 +5,8 @@ import java.awt.event.MouseAdapter;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.*;
+import javax.swing.table.JTableHeader;
+
 import java.util.List;
 
 public class JobHistoryPanel {
@@ -153,9 +155,11 @@ public class JobHistoryPanel {
         });
     }
 
+    //gets passed an employee from Employee class and displays all saved job histories saved under their name
     public void showViewJobHistory(Employee employee){
         JPanel viewJobHistoryPanel = new JPanel(new BorderLayout());
         JLabel titleLabel = new JLabel(employee.getFullName() + " Job History", JLabel.CENTER);
+        SetStyle.setInstructionText(titleLabel);
         viewJobHistoryPanel.add(titleLabel, BorderLayout.NORTH);
 
         List<String> jobHistories = employeeManagementSystem.getJobHistories(employee);
@@ -170,6 +174,7 @@ public class JobHistoryPanel {
                 String[] historyParts = historyLine.split(",");
 
                 if(historyParts.length >= 7){
+                    //historyParts[0] is the name, so start with part 1 to display intended parts
                     data[i][0] = historyParts[1].trim();
                     data[i][1] = historyParts[2].trim();
                     data[i][2] = historyParts[3].trim();
@@ -178,10 +183,15 @@ public class JobHistoryPanel {
             }
 
             JTable table = new JTable(data, columnNames);
+            JTableHeader tableHeader = table.getTableHeader();
+            SetStyle.setTableHeaderText(tableHeader);
             JScrollPane scrollPane = new JScrollPane(table);
             viewJobHistoryPanel.add(scrollPane, BorderLayout.CENTER);
             mainPanel.add(viewJobHistoryPanel, "View Job History");
             cardLayout.show(mainPanel, "View Job History");
+
+            SetStyle.setTable(table);
+            SetStyle.setBackground(viewJobHistoryPanel);
 
             table.addMouseListener(new MouseAdapter() {
                 @Override
@@ -198,6 +208,7 @@ public class JobHistoryPanel {
         }
     }
 
+    //gets passed one specific employees specific job history (so really just one specific line form the text file) and displays all of its info
     public void viewSpecificJobHistory(String title, List<String> jobHistories){
         JPanel detailPanel = new JPanel(new BorderLayout());
         JLabel titleLabel = new JLabel(title, JLabel.CENTER);
@@ -257,6 +268,7 @@ public class JobHistoryPanel {
             panel.add(fields[i]);
         }
     }
+    
     public void addJobHistoryToEmployee(String employeeID, JobHistory jobHistory) {
         List<Employee> employees = employeeManagementSystem.getEmployees(); 
         for (Employee employee : employees) {

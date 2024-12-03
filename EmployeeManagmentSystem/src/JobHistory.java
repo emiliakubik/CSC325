@@ -13,7 +13,6 @@ public class JobHistory {
     private String pastJobTitle;
     private String pastJobDuration; //to be entered in months
     private String reasonForLeaving;
-    private Employee associatedEmployee;
 
     //job details constructor
     public JobHistory(String employeeName, String jobTitle, String companyName, String startDate, String endDate, String jobDescription, String department, String position){

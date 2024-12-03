@@ -1,8 +1,6 @@
 
-T819, Emilia Kubik, ekubik1@murraystate.edu, 2246229879, Employee, Business Building, Murray, IL, 60010, 17, 4, 2005, Female, 16, 10, 2022
-M730, Michael, michael123@gmail.com, 1234567890, Manager, 123 Rainbow Road, Houston, TX, 12345, 4, 3, 1962, Male, 16, 9, 2022
-# Sprint Evaluations
-Emilia Kubik, Eval 1, 4, 10, 2024, question 1 answer, question 2 answer, question 3 answer
-# Job History
- Emilia Kubik, manager, Apple, 2020-04-17, 2022-08-22, manage, Finance, Financial Analyst
- Michael, Site reliability engineer, Google, 2021-12-04, 2024-11-11, Site Reliability Engineer, Engineering, Senior Engineer
+T601, Alex Johnson, ajohnson@gmail.com, 1234567890, Admin, 123 Road, Murray, KY, 42071, 28, 4, 1965, Male, 29, 12, 2023
+J373, Taylor Brown, tayBrown@murraystate.edu, 3927490382, Employee, 47 Street, New York, NY, 39847, 26, 6, 1983, Female, 29, 1, 2022
+F532, Morgan Davis, morgandavis@yahoo.com, 8173840284, Employee, 2039 Court, Dallas, TX, 48397, 29, 2, 1999, Female, 17, 4, 2023
+E271, James Wilson, wilsonjames@comcast.net, 8473829487, Manager, 9485 Blvd, Chicago, IL, 20398, 9, 11, 1993, Male, 22, 3, 2020
+A817, Chris Anderson, chrisand@yale.edu, 4738294759, Admin, 489 Street, Buffalo, NM, 48579, 27, 4, 2005, Male, 15, 8, 2024

@@ -53,7 +53,7 @@ public class GUI {
         // Update the logo label with the resized icon
         logoLabel.setIcon(logoIcon);
 
-        // Add buttons for each key feature
+        // Add buttons for each key feature, when clicked, each will call specific class and its GUI/panel
         addButton("Dashboard", new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 DashboardPanel dashboardPanel = new DashboardPanel(mainPanel, cardLayout, employeeManagementSystem);

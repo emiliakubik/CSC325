@@ -3,7 +3,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import javax.swing.table.JTableHeader;
 
 public class SprintEvaluationPanel {
@@ -212,6 +211,7 @@ public class SprintEvaluationPanel {
         return sprintEvalPanel;
     }
 
+    //gets passed an employee from Employee class and displays all saved sprint evaluations saved under their name
     public JPanel viewSprintEvalPanel(Employee employee){
         JPanel viewPanel = new JPanel(new BorderLayout());
         JLabel titleLabel = new JLabel("Sprint Evaluations for " + employee.getFullName(), JLabel.CENTER);
@@ -262,6 +262,7 @@ public class SprintEvaluationPanel {
         return viewPanel;
     }
 
+    //gets passed one specific employees specific sprint evaluation (so really just one specific line form the text file) and displays all of its info
     private void viewSpecificSprintEvalPanel(String title, List<String> evals){
         JPanel detailPanel = new JPanel(new BorderLayout());
         JLabel titleLabel = new JLabel(title, JLabel.CENTER);
