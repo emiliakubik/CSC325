@@ -1,0 +1,13 @@
+G354, Alex Johnson, ajohnson@gmail.com, 1234567890, Manager, 123 Street, Murray, KY, 42071, 5, 1, 1963, Male, 19, 9, 2017
+S453, Jordan Smith, jordansmith@yale.edu, 4893748503, Admin, 47 court, New York, NY, 48395, 17, 7, 1997, Female, 23, 11, 2023
+S693, Taylor Brown, tbrown@murraystate.edu, 5894736840, Employee, 703 blvd, Chicago, IL, 60489, 20, 9, 1995, Female, 28, 6, 2020
+U917, Casey Wilson, caswilson@comcast.net, 5937264893, Employee, 594 road, Dallas, TX, 49573, 27, 2, 1992, Male, 21, 11, 2023
+B804, Jamie Miller, jmil@gmail.com, 5840384758, Employee, 589 street, Nashville, TN, 48395, 16, 9, 1992, Female, 15, 10, 2024
+W930, Sam Jackson, samjack@yahoo.com, 4837493048, Employee, 498 corner, Boston, MA, 39483, 4, 3, 1985, Male, 15, 11, 2022
+# Sprint Evaluations
+Jamie Miller, Performance Summary, 4, 11, 2024, code debugging, we got it all done, none
+Jamie Miller, Progress Review, 5, 10, 2023, user stories 1-3, Did not reach user story #4, will prioritize that in the next sprint, User 3 had to be modified due to further research to best fit user interests
+Jamie Miller, Review and Feedback, 9, 3, 2022, Finalized the project and did final pushes of code, Some final GUI touches could be added, just frontend work left to do
+# Job History
+ Casey Wilson, Software Engineer, Apple, 2020-04-18, 2022-11-01, Worked on creating the new iPhone 14, Engineering, Senior Engineer
+ Casey Wilson, HR, Google, 2017-08-21, 2020-03-10, Managed employee recruitment and engagement, Human Resources, Talent Aquisition Specialist

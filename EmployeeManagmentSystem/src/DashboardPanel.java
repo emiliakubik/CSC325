@@ -55,17 +55,17 @@ public class DashboardPanel {
 
         // Create first Graph Panel with image (panel size 400x250)
         JPanel graphPanel1 = createGraphPlaceholderPanel("Map",
-                "CSC325\\EmployeeManagmentSystem\\src\\images\\Employee_Map.png", 600, 500);
+                "EmployeeManagmentSystem/src/images/Employee_Map.png", 400, 250);
         graphsPanel.add(graphPanel1);
 
         // Create second Graph Panel with image (panel size 500x300)
         JPanel graphPanel2 = createGraphPlaceholderPanel("Graph",
-                "CSC325\\EmployeeManagmentSystem\\src\\images\\EmployeeRate_Graph.png", 600, 500);
+                "EmployeeManagmentSystem/src/images/EmployeeRate_Graph.png", 500, 300);
         graphsPanel.add(graphPanel2);
 
         // Create third Graph Panel with square image
         JPanel graphPanel3 = createGraphPlaceholderPanel("Pie Chart",
-                "CSC325\\EmployeeManagmentSystem\\src\\images\\EmployeesGender_Graph.png", 500, 500);
+                "EmployeeManagmentSystem/src/images/EmployeesGender_Graph.png", 500, 500);
         graphsPanel.add(graphPanel3);
 
         // Add the graphs panel to the dashboard
