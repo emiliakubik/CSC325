@@ -19,7 +19,7 @@ public class Login {
         frame.setResizable(false);
 
         // Load the logo
-        ImageIcon customIcon = new ImageIcon("CSC325\\EmployeeManagmentSystem\\src\\images\\HR_APP_logo.png");
+        ImageIcon customIcon = new ImageIcon("EmployeeManagmentSystem/src/images/HR_APP_logo.png");
         frame.setIconImage(customIcon.getImage());
 
         // Create a panel for the login form

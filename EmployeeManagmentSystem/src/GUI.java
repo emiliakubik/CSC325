@@ -20,7 +20,7 @@ public class GUI {
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Windowed fullscreen
 
         // Load the logo
-        ImageIcon customIcon = new ImageIcon("CSC325\\EmployeeManagmentSystem\\src\\images\\HR_APP_logo.png");
+        ImageIcon customIcon = new ImageIcon("EmployeeManagmentSystem/src/images/HR_APP_logo.png");
 
         // Set the logo as the window icon
         frame.setIconImage(customIcon.getImage());
@@ -42,7 +42,7 @@ public class GUI {
         buttonPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 2, Color.BLACK)); // Top, Left, Bottom, Right
 
         // Add the logo to the top-left
-        ImageIcon logoIcon = new ImageIcon("CSC325\\EmployeeManagmentSystem\\src\\images\\HR_APP_logo.png");
+        ImageIcon logoIcon = new ImageIcon("EmployeeManagmentSystem/src/images/HR_APP_logo.png");
         JLabel logoLabel = new JLabel(logoIcon);
         buttonPanel.add(logoLabel); // Add logo to the button panel
 
