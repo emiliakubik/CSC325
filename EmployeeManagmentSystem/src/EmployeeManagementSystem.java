@@ -4,7 +4,7 @@ import java.util.List;
 
 public class EmployeeManagementSystem{
     //this is the txt file that all employee info will be kept on
-    private static final String FILE_PATH = "empManagementSystem.txt";
+    private static final String FILE_PATH = "EmpManagementSystem.txt";
 
     //this method gets passed an employee from Employee class, takes this info and writes it into the txt file
     public void addEmployee(Employee employee){
@@ -242,7 +242,7 @@ public class EmployeeManagementSystem{
                 }
             }
         } catch(IOException e){ //exception handling incase for some reason info cannot be read from the file
-            System.out.println("Unable to read from file.");
+            System.out.println("Unable to read from file. " + FILE_PATH + " " + System.getProperty("user.dir"));
         }
         return employeeList;
     }
