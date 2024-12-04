@@ -1,5 +1,8 @@
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
+
 import java.util.List;
 
 public class DashboardPanel {
@@ -37,7 +40,7 @@ public class DashboardPanel {
         JPanel searchBarPanel = searchBar.createSearchPanel();
 
         // Add a border around the search bar panel
-        searchBarPanel.setBorder(BorderFactory.createLineBorder(new Color(20, 60, 20), 2)); // Set border color and wdith
+        searchBarPanel.setBorder(BorderFactory.createLineBorder(new Color(20, 60, 20), 2)); // Set border color
         topSectionPanel.add(searchBarPanel, BorderLayout.WEST);
 
         // Add Key Indicators on the right
@@ -48,16 +51,24 @@ public class DashboardPanel {
         dashboardPanel.add(topSectionPanel, BorderLayout.CENTER);
 
         // Add Graphs Placeholder panels
-        JPanel graphsPanel = new JPanel(new GridLayout(1, 2, 10, 10));
+        JPanel graphsPanel = new JPanel(new GridLayout(1, 3, 10, 10)); // Grid layout with 3 columns
 
-        // Create first Graph Panel
-        JPanel graphPanel1 = createGraphPlaceholderPanel("Performance Graph 1");
+        // Create first Graph Panel with image (panel size 400x250)
+        JPanel graphPanel1 = createGraphPlaceholderPanel("Map",
+                "CSC325\\EmployeeManagmentSystem\\src\\images\\Employee_Map.png", 600, 500);
         graphsPanel.add(graphPanel1);
 
-        // Create second Graph Panel
-        JPanel graphPanel2 = createGraphPlaceholderPanel("Performance Graph 2");
+        // Create second Graph Panel with image (panel size 500x300)
+        JPanel graphPanel2 = createGraphPlaceholderPanel("Graph",
+                "CSC325\\EmployeeManagmentSystem\\src\\images\\EmployeeRate_Graph.png", 600, 500);
         graphsPanel.add(graphPanel2);
 
+        // Create third Graph Panel with square image
+        JPanel graphPanel3 = createGraphPlaceholderPanel("Pie Chart",
+                "CSC325\\EmployeeManagmentSystem\\src\\images\\EmployeesGender_Graph.png", 500, 500);
+        graphsPanel.add(graphPanel3);
+
+        // Add the graphs panel to the dashboard
         dashboardPanel.add(graphsPanel, BorderLayout.SOUTH);
 
         // Add the dashboard to the main panel
@@ -75,11 +86,12 @@ public class DashboardPanel {
         // Set background color
         keyIndicatorsPanel.setBackground(Color.decode("#F2F2F2"));
 
-        // Set the border color
-        keyIndicatorsPanel.setBorder(BorderFactory.createTitledBorder(
-                BorderFactory.createLineBorder(new Color(20, 60, 20), 2),
-                "Key Indicators" // Title text
-        ));
+        // Set the border color and title font size
+        Border border = BorderFactory.createLineBorder(new Color(20, 60, 20), 2);
+        TitledBorder titledBorder = BorderFactory.createTitledBorder(border, "Key Indicators");
+        titledBorder.setTitleFont(new Font("Verdana", Font.BOLD, 20));
+
+        keyIndicatorsPanel.setBorder(titledBorder); // Apply the custom border with title font
 
         List<Employee> employees = employeeManagementSystem.getEmployees();
 
@@ -92,28 +104,35 @@ public class DashboardPanel {
         JLabel sprintEvaluationsLabel = new JLabel("Total Sprint Evaluations: " + numberOfSprintEvaluations,
                 JLabel.CENTER);
 
+        // Set font size for key indicator labels
+        totalEmployeesLabel.setFont(new Font("Verdana", Font.BOLD, 22)); 
+        sprintEvaluationsLabel.setFont(new Font("Verdana", Font.BOLD, 22)); 
+
         keyIndicatorsPanel.add(totalEmployeesLabel);
         keyIndicatorsPanel.add(sprintEvaluationsLabel);
 
         return keyIndicatorsPanel;
     }
 
-    private JPanel createGraphPlaceholderPanel(String title) {
+    private JPanel createGraphPlaceholderPanel(String title, String imagePath, int panelWidth, int panelHeight) {
         JPanel graphPanel = new JPanel(new BorderLayout());
         graphPanel.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createLineBorder(new Color(20, 60, 20), 2), // Set the border color
-                "Performance Graph" // Title text
+                title // Title text
         ));
 
-        JLabel placeholder = new JLabel("Graph will appear here", JLabel.CENTER);
-        placeholder.setOpaque(true);
-        placeholder.setBackground(Color.decode("#F2F2F2"));
-        placeholder.setForeground(Color.DARK_GRAY);
-        graphPanel.add(placeholder, BorderLayout.CENTER);
+        // Set the preferred size for the graph panel (panel size is now different from
+        // the image size)
+        graphPanel.setPreferredSize(new Dimension(panelWidth, panelHeight));
 
-        // Set a preferred size
-        graphPanel.setPreferredSize(new Dimension(400, 300));
+        // Load the image
+        ImageIcon graphImage = new ImageIcon(imagePath);
+
+        // Create a JLabel to display the image without resizing it
+        JLabel graphLabel = new JLabel(graphImage);
+        graphPanel.add(graphLabel, BorderLayout.CENTER);
 
         return graphPanel;
     }
+
 }

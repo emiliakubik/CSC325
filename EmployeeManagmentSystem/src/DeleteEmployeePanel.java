@@ -12,55 +12,45 @@ public class DeleteEmployeePanel {
         this.employeeManagementSystem = employeeManagementSystem;
     }
 
-    //Show the Delete Employee Panel
-    public void showDeleteEmployeePanel() {
-        //implementing attributes of "Remove Employee" button
-        JButton removeButton = new JButton("Remove Employee");
+    // Show the Delete Employee popup
+    public void showDeleteEmployeePopup() {
+        // Create a panel for the input
+        JPanel deleteEmployeePanel = new JPanel();
+        deleteEmployeePanel.setLayout(new GridLayout(2, 2, 10, 10));
+
+        // Set up components for Employee ID input
         String instructionHolder = "Enter Employee ID";
         JTextField employeeIdField = new JTextField(instructionHolder);
         SetStyle.setFocusListener(employeeIdField, instructionHolder);
-
-        //setting up panel for removing a person and the way it's laid out
-        JPanel removeEmployeePanel = new JPanel();
-        removeEmployeePanel.setLayout(new GridLayout(2, 2, 10, 10));
-        SetStyle.setBackground(removeEmployeePanel);
-
-        //adding components to panel- must type in the employees ID to remove them
         JLabel instruction = new JLabel("Employee ID: ");
         SetStyle.setInstructionText(instruction);
-        removeEmployeePanel.add(instruction);
-        removeEmployeePanel.add(employeeIdField);
-        //adding a remove button to finalize the action
-        removeEmployeePanel.add(new JLabel());
-        removeEmployeePanel.add(removeButton);
 
-        //add panel to the mainPanel with name "Remove Employees"
-        mainPanel.add(removeEmployeePanel, "Remove Employee");
+        // Add components to the panel
+        deleteEmployeePanel.add(instruction);
+        deleteEmployeePanel.add(employeeIdField);
+        
+        // Show the popup dialog
+        int option = JOptionPane.showConfirmDialog(mainPanel, deleteEmployeePanel, "Remove Employee", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
-        //show "Remove Employee" panel using cardLayout
-        cardLayout.show(mainPanel, "Remove Employee");
-
-        //action listener- responds to the remove button being clicked 
-        removeButton.addActionListener(e -> {
+        if (option == JOptionPane.OK_OPTION) {
             String employeeID = employeeIdField.getText().trim();
-            //if nothing is input before clicking the button, user receives a message asking for input
+
+            // If the input is empty, ask for input
             if(employeeID.isEmpty()){
                 JOptionPane.showMessageDialog(mainPanel, "Please enter an Employee ID");
                 return;
             }
 
-            //calls removeEmployee method in employeeManagementSystem- if successful, returns true
+            // Call removeEmployee method in employeeManagementSystem - if successful, returns true
             boolean success = employeeManagementSystem.removeEmployee(employeeID);
 
             if(success){
-                //if successful, user receives confirmation through success message
+                // Show success message
                 JOptionPane.showMessageDialog(mainPanel, "Employee " + employeeID + " removed successfully.");
             } else {
-                //if unsuccessful, user receives a message saying the employee was not found, therefore not removed
+                // Show error message if employee is not found
                 JOptionPane.showMessageDialog(mainPanel, "Employee " + employeeID + " not found.");
             }
-            //resets the text field to empty for next time use
-            employeeIdField.setText("");
-        });
+        }
     }
 }

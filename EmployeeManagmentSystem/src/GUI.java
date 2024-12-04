@@ -80,7 +80,7 @@ public class GUI {
             public void actionPerformed(ActionEvent e) {
                 DeleteEmployeePanel deleteEmployeePanel = new DeleteEmployeePanel(mainPanel, cardLayout,
                         employeeManagementSystem);
-                deleteEmployeePanel.showDeleteEmployeePanel();
+                deleteEmployeePanel.showDeleteEmployeePopup();  // Update this to show a popup, not a separate panel
             }
         });
 
@@ -113,12 +113,14 @@ public class GUI {
         });
 
         // Add the panels to the main panel (CardLayout for switching views)
-        mainPanel.add(new JPanel(), "Create Employee"); // Placeholder panel
-        mainPanel.add(new JPanel(), "View Employees"); // Placeholder panel
-        mainPanel.add(new JPanel(), "Delete Employee"); // Placeholder panel
-        mainPanel.add(new JPanel(), "Job History"); // Placeholder panel
         DashboardPanel dashboardPanel = new DashboardPanel(mainPanel, cardLayout, employeeManagementSystem);
-        dashboardPanel.showDashboard();
+        dashboardPanel.showDashboard();  // This will be shown by default
+
+        // Add placeholder panels for other sections to the mainPanel
+        mainPanel.add(new JPanel(), "Create Employee"); 
+        mainPanel.add(new JPanel(), "View Employees"); 
+        mainPanel.add(new JPanel(), "Delete Employee"); 
+        mainPanel.add(new JPanel(), "Job History"); 
 
         // Layout for the frame
         frame.setLayout(new BorderLayout());
