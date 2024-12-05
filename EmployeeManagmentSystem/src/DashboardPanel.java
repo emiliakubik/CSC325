@@ -53,17 +53,17 @@ public class DashboardPanel {
         // Add Graphs Placeholder panels
         JPanel graphsPanel = new JPanel(new GridLayout(1, 3, 10, 10)); // Grid layout with 3 columns
 
-        // Create first Graph Panel with image (panel size 400x250)
+        // Create first Graph Panel 
         JPanel graphPanel1 = createGraphPlaceholderPanel("Map",
                 "EmployeeManagmentSystem/src/images/Employee_Map.png", 400, 250);
         graphsPanel.add(graphPanel1);
 
-        // Create second Graph Panel with image (panel size 500x300)
+        // Create second Graph Panel 
         JPanel graphPanel2 = createGraphPlaceholderPanel("Graph",
                 "EmployeeManagmentSystem/src/images/EmployeeRate_Graph.png", 500, 300);
         graphsPanel.add(graphPanel2);
 
-        // Create third Graph Panel with square image
+        // Create third Graph Panel 
         JPanel graphPanel3 = createGraphPlaceholderPanel("Pie Chart",
                 "EmployeeManagmentSystem/src/images/EmployeesGender_Graph.png", 500, 500);
         graphsPanel.add(graphPanel3);
@@ -75,7 +75,6 @@ public class DashboardPanel {
         mainPanel.add(dashboardPanel, "Dashboard");
         cardLayout.show(mainPanel, "Dashboard");
 
-        // Ensure layout is updated
         mainPanel.revalidate();
         mainPanel.repaint();
     }
@@ -121,8 +120,7 @@ public class DashboardPanel {
                 title // Title text
         ));
 
-        // Set the preferred size for the graph panel (panel size is now different from
-        // the image size)
+        // Set the preferred size for the graph
         graphPanel.setPreferredSize(new Dimension(panelWidth, panelHeight));
 
         // Load the image

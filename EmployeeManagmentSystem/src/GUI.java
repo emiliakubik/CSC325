@@ -80,7 +80,7 @@ public class GUI {
             public void actionPerformed(ActionEvent e) {
                 DeleteEmployeePanel deleteEmployeePanel = new DeleteEmployeePanel(mainPanel, cardLayout,
                         employeeManagementSystem);
-                deleteEmployeePanel.showDeleteEmployeePopup();  // Update this to show a popup, not a separate panel
+                deleteEmployeePanel.showDeleteEmployeePopup();
             }
         });
 
@@ -124,8 +124,8 @@ public class GUI {
 
         // Layout for the frame
         frame.setLayout(new BorderLayout());
-        frame.add(buttonPanel, BorderLayout.WEST); // Buttons on the left
-        frame.add(mainPanel, BorderLayout.CENTER); // Dynamic content in the center
+        frame.add(buttonPanel, BorderLayout.WEST);
+        frame.add(mainPanel, BorderLayout.CENTER);
 
         frame.setVisible(true); // Make the window visible
     }

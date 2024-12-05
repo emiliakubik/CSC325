@@ -40,8 +40,8 @@ public class Login {
         birthdateField.setBackground(Color.WHITE);
         birthdateField.setCaretColor(Color.BLACK); // Cursor color
 
-        // Set placeholder color (gray)
-        birthdateField.setForeground(Color.black); // Placeholder text
+        // Set placeholder color
+        birthdateField.setForeground(Color.black);
 
         // Add login button
         JButton loginButton = new JButton("Login");
@@ -81,8 +81,8 @@ public class Login {
                 // Close the login screen
                 frame.dispose();
 
-                // Launch the main GUI (Employee Management System)
-                new GUI(); // Replace with your main GUI class
+                // Launch the main GUI
+                new GUI();
             }
         });
 
